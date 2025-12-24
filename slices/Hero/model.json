@@ -1,0 +1,75 @@
+{
+  "id": "hero",
+  "type": "SharedSlice",
+  "name": "Hero",
+  "description": "Hero",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "titulo": {
+          "type": "Text",
+          "config": {
+            "label": "Titulo",
+            "placeholder": "Titulo"
+          }
+        },
+        "subtitulo": {
+          "type": "Text",
+          "config": {
+            "label": "Subtitulo",
+            "placeholder": ""
+          }
+        },
+        "mostrar_boton_contacto": {
+          "type": "Boolean",
+          "config": {
+            "label": "Mostrar boton contacto",
+            "placeholder_false": "false",
+            "placeholder_true": "true",
+            "default_value": false
+          }
+        },
+        "mostrar_boton_calendario": {
+          "type": "Boolean",
+          "config": {
+            "label": "Mostrar boton calendario",
+            "placeholder_false": "false",
+            "placeholder_true": "true",
+            "default_value": false
+          }
+        },
+        "background_image": {
+          "type": "Image",
+          "config": {
+            "label": "Background image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "enumeracion": {
+          "type": "Group",
+          "config": {
+            "label": "Enumeracion",
+            "repeat": true,
+            "fields": {
+              "texto": {
+                "type": "Text",
+                "config": {
+                  "label": "Texto",
+                  "placeholder": ""
+                }
+              }
+            }
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

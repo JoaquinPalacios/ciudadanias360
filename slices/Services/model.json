@@ -1,0 +1,82 @@
+{
+  "id": "services",
+  "type": "SharedSlice",
+  "name": "Services",
+  "description": "Services",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "titulo": {
+          "type": "Text",
+          "config": {
+            "label": "Titulo",
+            "placeholder": ""
+          }
+        },
+        "cards": {
+          "type": "Group",
+          "config": {
+            "label": "Cards",
+            "repeat": true,
+            "fields": {
+              "icono": {
+                "type": "Select",
+                "config": {
+                  "label": "Icono",
+                  "placeholder": "",
+                  "options": [
+                    "Ciudadanias",
+                    "Visas",
+                    "Consulares",
+                    "Argentina"
+                  ]
+                }
+              },
+              "titulo": {
+                "type": "Text",
+                "config": {
+                  "label": "Titulo",
+                  "placeholder": ""
+                }
+              },
+              "texto": {
+                "type": "Text",
+                "config": {
+                  "label": "Texto",
+                  "placeholder": ""
+                }
+              },
+              "lista": {
+                "type": "StructuredText",
+                "config": {
+                  "label": "Lista",
+                  "placeholder": "",
+                  "allowTargetBlank": false,
+                  "single": "list-item"
+                }
+              },
+              "link": {
+                "type": "Link",
+                "config": {
+                  "label": "Link",
+                  "placeholder": "",
+                  "select": null,
+                  "allowTargetBlank": false,
+                  "allowText": true,
+                  "repeat": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

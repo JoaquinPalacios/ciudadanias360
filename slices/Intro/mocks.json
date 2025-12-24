@@ -1,0 +1,68 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"titulo": {
+				"__TYPE__": "FieldContent",
+				"value": "buffalo",
+				"type": "Text"
+			},
+			"texto": {
+				"__TYPE__": "FieldContent",
+				"value": "it",
+				"type": "Text"
+			},
+			"enumeracion": {
+				"__TYPE__": "GroupContentType",
+				"value": [
+					{
+						"__TYPE__": "GroupItemContent",
+						"value": [
+							[
+								"titulo",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "later",
+									"type": "Text"
+								}
+							],
+							[
+								"texto",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "medicine",
+									"type": "Text"
+								}
+							]
+						]
+					}
+				]
+			},
+			"imagen": {
+				"origin": {
+					"id": "main",
+					"url": "https://images.unsplash.com/photo-1547394765-185e1e68f34e",
+					"width": 6000,
+					"height": 4000
+				},
+				"url": "https://images.unsplash.com/photo-1547394765-185e1e68f34e",
+				"width": 6000,
+				"height": 4000,
+				"edit": {
+					"zoom": 1,
+					"crop": {
+						"x": 0,
+						"y": 0
+					},
+					"background": "transparent"
+				},
+				"alt": "screen",
+				"credits": null,
+				"__TYPE__": "ImageContent",
+				"thumbnails": {}
+			}
+		},
+		"items": []
+	}
+]

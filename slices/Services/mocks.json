@@ -1,0 +1,74 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"titulo": {
+				"__TYPE__": "FieldContent",
+				"value": "action",
+				"type": "Text"
+			},
+			"cards": {
+				"__TYPE__": "GroupContentType",
+				"value": [
+					{
+						"__TYPE__": "GroupItemContent",
+						"value": [
+							[
+								"titulo",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "manufacturing",
+									"type": "Text"
+								}
+							],
+							[
+								"texto",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "record",
+									"type": "Text"
+								}
+							],
+							[
+								"icono",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "Visas",
+									"type": "Select"
+								}
+							],
+							[
+								"lista",
+								{
+									"__TYPE__": "StructuredTextContent",
+									"value": [
+										{
+											"type": "paragraph",
+											"content": {
+												"text": "Do deserunt duis ipsum sit anim exercitation nisi nostrud proident excepteur minim fugiat occaecat."
+											}
+										}
+									]
+								}
+							],
+							[
+								"link",
+								{
+									"key": "f8ff5592-0cf5-435d-bf86-acf813d297d7",
+									"__TYPE__": "LinkContent",
+									"value": {
+										"__TYPE__": "ExternalLink",
+										"url": "https://prismic.io",
+										"text": "few"
+									}
+								}
+							]
+						]
+					}
+				]
+			}
+		},
+		"items": []
+	}
+]

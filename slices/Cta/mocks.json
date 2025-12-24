@@ -1,0 +1,39 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"titulo": {
+				"__TYPE__": "FieldContent",
+				"value": "seed",
+				"type": "Text"
+			},
+			"texto": {
+				"__TYPE__": "FieldContent",
+				"value": "fog",
+				"type": "Text"
+			},
+			"contacto": {
+				"key": "be5c1e78-4cd0-4c06-a19c-3a2bfc095792",
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "https://prismic.io",
+					"text": "sky",
+					"variant": "Secondary"
+				}
+			},
+			"whatsapp": {
+				"__TYPE__": "LinkContent",
+				"key": "882992f4-462c-4e2e-b412-eab48323b615",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "https://slicemachine.dev",
+					"text": "cage",
+					"variant": "Secondary"
+				}
+			}
+		},
+		"items": []
+	}
+]
