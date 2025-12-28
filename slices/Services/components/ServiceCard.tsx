@@ -44,7 +44,7 @@ export const ServiceCard = ({ card }: Props) => {
   };
 
   return (
-    <div className="bg-white w-full backdrop-blur-md px-5 py-4 rounded-xl shadow flex flex-col">
+    <div className="bg-white w-full backdrop-blur-md p-4 md:px-5 rounded-xl shadow flex flex-col">
       {card.titulo ? (
         <h3 className="text-2xl font-semibold text-finn mt-2 flex items-center gap-2">
           <ServiceCardIcon icono={card.icono} />

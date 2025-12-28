@@ -40,7 +40,7 @@ const Intro: FC<IntroProps> = ({ slice }) => {
         {hasSideBySide ? (
           <div
             className={[
-              "w-full mx-auto grid gap-6 items-center md:mb-12 lg:mb-16",
+              "w-full mx-auto grid gap-6 items-start lg:items-center",
               hasEnumeracion && hasImagen ? "md:grid-cols-2" : "md:grid-cols-1",
             ].join(" ")}
           >
@@ -81,13 +81,7 @@ const Intro: FC<IntroProps> = ({ slice }) => {
                     fallbackAlt=""
                   />
                   {/* Subtle left-edge fade into the section background */}
-                  <div
-                    className="pointer-events-none absolute inset-0"
-                    style={{
-                      background:
-                        "linear-gradient(90deg, rgba(248,248,245,0.95) 0%, rgba(248,248,245,0.35) 22%, rgba(248,248,245,0) 45%)",
-                    }}
-                  />
+                  <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(248,248,245,0.95)_0%,rgba(248,248,245,0.35)_22%,rgba(248,248,245,0)_45%)] md:bg-[linear-gradient(90deg,rgba(248,248,245,0.95)_0%,rgba(248,248,245,0.35)_22%,rgba(248,248,245,0)_45%)]" />
                 </div>
               </div>
             ) : null}

@@ -18,9 +18,9 @@ const Services: FC<ServicesProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="px-6 py-20 relative overflow-hidden bg-carrara"
+      className="px-4 pb-16 pt-12 lg:px-6 lg:py-20 relative overflow-hidden bg-carrara"
     >
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-16 relative z-20">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-7 lg:gap-16 relative z-20">
         {titulo ? (
           <h2 className="text-finn text-center max-w-4xl mx-auto leading-none text-pretty">
             {titulo}
