@@ -1,5 +1,10 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## UI notes
+
+- **Navbar scroll behavior**: the top navbar is **sticky** and will **hide on scroll down** / **reappear on scroll up** (always visible at the top). Implemented with the [`motion`](https://www.npmjs.com/package/motion) package.
+- **Mobile menu** (< `lg` / 1024px): the navbar shows a **burger button** that opens a **right-side drawer** with backdrop; closes on **link click**, **backdrop click**, or **Escape**.
+
 ## Getting Started
 
 First, run the development server:

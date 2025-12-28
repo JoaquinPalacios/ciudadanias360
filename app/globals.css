@@ -20,6 +20,7 @@
   /* Font sizes */
   --text-6xl: 4.25rem; /* 68px */
   --text-4xl: 3.25rem; /* 52px */
+  --text-3xl: 1.75rem; /* 28px */
 
   /* containers */
   --container-8xl: 1536px;

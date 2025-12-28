@@ -9,7 +9,7 @@ export const ServiceCards = ({ cards }: Props) => {
   if (!cards?.length) return null;
 
   return (
-    <div className="grid gap-10 md:grid-cols-2 md:justify-items-center">
+    <div className="grid gap-8 xl:gap-10 md:grid-cols-2 md:justify-items-center">
       {cards.map((card, idx) => (
         <ServiceCard key={idx} card={card} />
       ))}

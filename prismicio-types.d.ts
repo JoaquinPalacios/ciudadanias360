@@ -69,6 +69,8 @@ type ContentRelationshipFieldWithData<
   >;
 }[Exclude<TCustomType[number], string>["id"]];
 
+type FooterDocumentDataSlicesSlice = FooterItemSlice;
+
 /**
  * Content for Footer documents
  */
@@ -83,6 +85,17 @@ interface FooterDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   name: prismic.KeyTextField;
+
+  /**
+   * Slice Zone field in *Footer*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<FooterDocumentDataSlicesSlice>;
 }
 
 /**
@@ -162,6 +175,36 @@ interface HomeDocumentData {
 export type HomeDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
 
+type MenuDocumentDataSlicesSlice = MenuItemSlice;
+
+/**
+ * Content for Menu documents
+ */
+interface MenuDocumentData {
+  /**
+   * Slice Zone field in *Menu*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: menu.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<MenuDocumentDataSlicesSlice>;
+}
+
+/**
+ * Menu document from Prismic
+ *
+ * - **API ID**: `menu`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type MenuDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<Simplify<MenuDocumentData>, "menu", Lang>;
+
 type PageDocumentDataSlicesSlice = HeroSlice;
 
 /**
@@ -223,7 +266,11 @@ interface PageDocumentData {
 export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<PageDocumentData>, "page", Lang>;
 
-export type AllDocumentTypes = FooterDocument | HomeDocument | PageDocument;
+export type AllDocumentTypes =
+  | FooterDocument
+  | HomeDocument
+  | MenuDocument
+  | PageDocument;
 
 /**
  * Primary content in *Cta → Default → Primary*
@@ -308,6 +355,76 @@ type CtaSliceVariation = CtaSliceDefault;
  * - **Documentation**: https://prismic.io/docs/slices
  */
 export type CtaSlice = prismic.SharedSlice<"cta", CtaSliceVariation>;
+
+/**
+ * Item in *FooterItem → Default → Primary → Links*
+ */
+export interface FooterItemSliceDefaultPrimaryLinksItem {
+  /**
+   * Link field in *FooterItem → Default → Primary → Links*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer_item.default.primary.links[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Primary content in *FooterItem → Default → Primary*
+ */
+export interface FooterItemSliceDefaultPrimary {
+  /**
+   * Titulo field in *FooterItem → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer_item.default.primary.titulo
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  titulo: prismic.KeyTextField;
+
+  /**
+   * Links field in *FooterItem → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer_item.default.primary.links[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  links: prismic.GroupField<Simplify<FooterItemSliceDefaultPrimaryLinksItem>>;
+}
+
+/**
+ * Default variation for FooterItem Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FooterItemSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<FooterItemSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *FooterItem*
+ */
+type FooterItemSliceVariation = FooterItemSliceDefault;
+
+/**
+ * FooterItem Shared Slice
+ *
+ * - **API ID**: `footer_item`
+ * - **Description**: FooterItem
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FooterItemSlice = prismic.SharedSlice<
+  "footer_item",
+  FooterItemSliceVariation
+>;
 
 /**
  * Item in *Hero → Default → Primary → Enumeracion*
@@ -520,6 +637,66 @@ type IntroSliceVariation = IntroSliceDefault;
 export type IntroSlice = prismic.SharedSlice<"intro", IntroSliceVariation>;
 
 /**
+ * Item in *MenuItem → Default → Primary → Links*
+ */
+export interface MenuItemSliceDefaultPrimaryLinksItem {
+  /**
+   * Link field in *MenuItem → Default → Primary → Links*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: menu_item.default.primary.links[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Primary content in *MenuItem → Default → Primary*
+ */
+export interface MenuItemSliceDefaultPrimary {
+  /**
+   * Links field in *MenuItem → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: menu_item.default.primary.links[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  links: prismic.GroupField<Simplify<MenuItemSliceDefaultPrimaryLinksItem>>;
+}
+
+/**
+ * Default variation for MenuItem Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type MenuItemSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<MenuItemSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *MenuItem*
+ */
+type MenuItemSliceVariation = MenuItemSliceDefault;
+
+/**
+ * MenuItem Shared Slice
+ *
+ * - **API ID**: `menu_item`
+ * - **Description**: MenuItem
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type MenuItemSlice = prismic.SharedSlice<
+  "menu_item",
+  MenuItemSliceVariation
+>;
+
+/**
  * Item in *Services → Default → Primary → Cards*
  */
 export interface ServicesSliceDefaultPrimaryCardsItem {
@@ -654,9 +831,13 @@ declare module "@prismicio/client" {
     export type {
       FooterDocument,
       FooterDocumentData,
+      FooterDocumentDataSlicesSlice,
       HomeDocument,
       HomeDocumentData,
       HomeDocumentDataSlicesSlice,
+      MenuDocument,
+      MenuDocumentData,
+      MenuDocumentDataSlicesSlice,
       PageDocument,
       PageDocumentData,
       PageDocumentDataSlicesSlice,
@@ -665,6 +846,11 @@ declare module "@prismicio/client" {
       CtaSliceDefaultPrimary,
       CtaSliceVariation,
       CtaSliceDefault,
+      FooterItemSlice,
+      FooterItemSliceDefaultPrimaryLinksItem,
+      FooterItemSliceDefaultPrimary,
+      FooterItemSliceVariation,
+      FooterItemSliceDefault,
       HeroSlice,
       HeroSliceDefaultPrimaryEnumeracionItem,
       HeroSliceDefaultPrimary,
@@ -675,6 +861,11 @@ declare module "@prismicio/client" {
       IntroSliceDefaultPrimary,
       IntroSliceVariation,
       IntroSliceDefault,
+      MenuItemSlice,
+      MenuItemSliceDefaultPrimaryLinksItem,
+      MenuItemSliceDefaultPrimary,
+      MenuItemSliceVariation,
+      MenuItemSliceDefault,
       ServicesSlice,
       ServicesSliceDefaultPrimaryCardsItem,
       ServicesSliceDefaultPrimary,
