@@ -26,7 +26,7 @@ const FooterItem: FC<FooterItemProps> = ({ slice }) => {
     <div
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="flex flex-col gap-3"
+      className="flex flex-col gap-2.5 lg:gap-3"
     >
       {title ? (
         <h4 className="text-tussok font-semibold tracking-wide text-lg">
