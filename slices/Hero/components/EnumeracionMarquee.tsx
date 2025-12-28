@@ -19,7 +19,7 @@ function EnumeracionStatic({
   return (
     <div
       className={cn(
-        "flex flex-wrap items-center justify-center gap-x-4 gap-y-2",
+        "flex flex-wrap items-center justify-center gap-x-4 gap-y-2 [&>div:first-child>p]:ml-4",
         className
       )}
     >
@@ -132,7 +132,7 @@ export function EnumeracionMarquee({
 
   return (
     <div
-      className={cn("relative overflow-hidden px-4", className)}
+      className={cn("relative overflow-hidden", className)}
       style={{
         // Subtle edge fade, keeps motion from feeling distracting.
         WebkitMaskImage:

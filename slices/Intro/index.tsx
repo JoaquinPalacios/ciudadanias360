@@ -22,7 +22,7 @@ const Intro: FC<IntroProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="px-6 py-20 relative overflow-hidden bg-carrara"
+      className="px-4 py-12 lg:px-6 lg:py-20 relative overflow-hidden bg-carrara"
     >
       <div className="mx-auto flex w-full max-w-8xl flex-col gap-6 relative z-20">
         {titulo ? (
@@ -32,7 +32,7 @@ const Intro: FC<IntroProps> = ({ slice }) => {
         ) : null}
 
         {texto ? (
-          <p className="max-w-4xl mx-auto text-mineShaft text-center text-lg lg:text-2xl mb-10 text-pretty">
+          <p className="max-w-4xl mx-auto text-mineShaft text-center text-lg lg:text-2xl mb-6 lg:mb-10 text-balance md:text-pretty">
             {texto}
           </p>
         ) : null}
@@ -40,12 +40,12 @@ const Intro: FC<IntroProps> = ({ slice }) => {
         {hasSideBySide ? (
           <div
             className={[
-              "w-full mx-auto grid gap-6 items-center mb-16",
+              "w-full mx-auto grid gap-6 items-center md:mb-12 lg:mb-16",
               hasEnumeracion && hasImagen ? "md:grid-cols-2" : "md:grid-cols-1",
             ].join(" ")}
           >
             {hasEnumeracion ? (
-              <div className="flex flex-col gap-10">
+              <div className="flex flex-col gap-6 lg:gap-10">
                 {enumeracion!.map((item, index) => {
                   const hasText = Boolean(item.titulo || item.texto);
                   if (!hasText) return null;
@@ -60,7 +60,7 @@ const Intro: FC<IntroProps> = ({ slice }) => {
                           </h3>
                         ) : null}
                         {item.texto ? (
-                          <p className="text-finn/80 text-base md:text-lg leading-relaxed">
+                          <p className="text-finn/80 text-base md:text-lg leading-relaxed text-pretty">
                             {item.texto}
                           </p>
                         ) : null}
