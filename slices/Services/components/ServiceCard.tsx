@@ -46,13 +46,13 @@ export const ServiceCard = ({ card }: Props) => {
   return (
     <div className="bg-white w-full backdrop-blur-md p-4 md:px-5 rounded-xl shadow flex flex-col">
       {card.titulo ? (
-        <h3 className="text-2xl font-semibold text-finn mt-2 flex items-center gap-2">
+        <h3 className="text-xl lg:text-2xl font-semibold text-finn mt-2 flex items-center gap-2">
           <ServiceCardIcon icono={card.icono} />
           {card.titulo}
         </h3>
       ) : null}
       {card.texto ? (
-        <p className="mt-2 text-lg text-codGray/90">{card.texto}</p>
+        <p className="mt-2 lg:text-lg text-codGray/90">{card.texto}</p>
       ) : null}
       {card.lista ? (
         <div className="mt-3 text-base text-codGray/90 mb-4">
@@ -68,7 +68,7 @@ export const ServiceCard = ({ card }: Props) => {
           className="mt-auto inline-flex items-center gap-1 text-tussok hover:underline underline-offset-4"
         >
           {linkText || "Ver más"}
-          <ArrowRight className="size-4" aria-hidden="true" />
+          <ArrowRight className="size-4 mt-0.5" aria-hidden="true" />
         </PrismicNextLink>
       ) : null}
     </div>

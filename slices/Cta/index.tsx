@@ -40,7 +40,7 @@ const Cta: FC<CtaProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="px-6 py-28 relative overflow-hidden text-white bg-linear-to-b from-tamarind via-finn to-cosmic"
+      className="px-4 py-20 lg:px-6 lg:py-28 relative overflow-hidden text-white bg-linear-to-b from-tamarind via-finn to-cosmic"
     >
       {/* Subtle vignette / glow overlays */}
       <div
@@ -60,7 +60,7 @@ const Cta: FC<CtaProps> = ({ slice }) => {
         ) : null}
 
         {texto ? (
-          <p className="max-w-3xl mx-auto text-white/80 text-center text-xl sm:text-2xl font-normal text-pretty mb-7">
+          <p className="max-w-3xl mx-auto text-white/80 text-center text-lg lg:text-2xl font-normal text-balance sm:text-pretty mb-4 lg:mb-7">
             {texto}
           </p>
         ) : null}
