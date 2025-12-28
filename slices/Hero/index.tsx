@@ -5,6 +5,7 @@ import { SliceComponentProps } from "@prismicio/react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
+import { EnumeracionMarquee } from "./components/EnumeracionMarquee";
 
 /**
  * Props for `Hero`.
@@ -23,6 +24,11 @@ const Hero: FC<HeroProps> = ({ slice }) => {
     mostrar_boton_calendario,
     enumeracion,
   } = slice.primary;
+
+  const enumeracionItems =
+    enumeracion
+      ?.map((item) => item.texto)
+      ?.filter((v): v is string => Boolean(v && v.trim())) ?? [];
 
   const renderTitleWithLastWordAccent = (text: string) => {
     const trimmed = text.trim();
@@ -44,7 +50,7 @@ const Hero: FC<HeroProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="px-6 py-16 relative overflow-hidden"
+      className="px-4 py-12 lg:px-6 lg:py-16 relative overflow-hidden"
     >
       {/* Background image (optional) */}
       {background_image?.url ? (
@@ -67,16 +73,16 @@ const Hero: FC<HeroProps> = ({ slice }) => {
 
       {/* Animated background pattern */}
       <div
-        className="absolute inset-0 opacity-15 z-10 pointer-events-none select-none"
+        className="absolute inset-0 opacity-10 lg:opacity-15 z-10 pointer-events-none select-none"
         aria-hidden="true"
       >
-        <div className="absolute top-20 left-20 w-64 h-64 border-2 border-tussok rounded-full" />
-        <div className="absolute bottom-20 right-20 w-96 h-96 border-2 border-tussok rounded-full" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white rounded-full" />
+        <div className="absolute top-20 left-20 size-32 lg:size-64 border-2 border-tussok rounded-full" />
+        <div className="absolute bottom-20 right-20 size-48 lg:size-96 border-2 border-tussok rounded-full" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-72 lg:size-[600px] border border-white rounded-full" />
       </div>
-      <div className="mx-auto flex w-full max-w-8xl flex-col gap-6 relative z-20 mt-40 mb-10">
+      <div className="mx-auto flex w-full max-w-8xl flex-col lg:gap-6 relative z-20 mt-20 md:mt-28 lg:mt-40 mb-6 lg:mb-10">
         {titulo ? (
-          <h1 className="text-white text-center max-w-5xl mx-auto leading-none mb-10">
+          <h1 className="text-white text-center max-w-5xl mx-auto leading-none mb-8 lg:mb-10">
             {renderTitleWithLastWordAccent(titulo)}
           </h1>
         ) : null}
@@ -84,7 +90,7 @@ const Hero: FC<HeroProps> = ({ slice }) => {
         {subtitulo ? (
           <p
             className={cn(
-              "max-w-4xl mx-auto text-white/90 text-center text-2xl",
+              "max-w-4xl mx-auto text-white/90 text-center text-xl lg:text-2xl",
               mostrar_boton_contacto || mostrar_boton_calendario
                 ? "mb-10"
                 : "mb-40"
@@ -94,7 +100,7 @@ const Hero: FC<HeroProps> = ({ slice }) => {
           </p>
         ) : null}
         {mostrar_boton_contacto || mostrar_boton_calendario ? (
-          <div className="flex gap-12 justify-center mb-12">
+          <div className="flex gap-6 md:gap-12 justify-center mb-12 flex-col sm:flex-row">
             {mostrar_boton_calendario ? (
               <Button size="lg">Agendá una consulta</Button>
             ) : null}
@@ -107,19 +113,27 @@ const Hero: FC<HeroProps> = ({ slice }) => {
           </div>
         ) : null}
 
-        {enumeracion?.length ? (
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
-            {enumeracion.map((item, index) => (
-              <Fragment key={index}>
-                <p className="text-white">{item.texto}</p>
-                {index < enumeracion.length - 1 ? (
-                  <span className="text-white/70" aria-hidden="true">
-                    •
-                  </span>
-                ) : null}
-              </Fragment>
-            ))}
-          </div>
+        {enumeracionItems.length ? (
+          <>
+            {/* Mobile: marquee */}
+            <div className="md:hidden">
+              <EnumeracionMarquee items={enumeracionItems} />
+            </div>
+
+            {/* Desktop (md+): keep current wrapped layout */}
+            <div className="hidden md:flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+              {enumeracionItems.map((texto, index) => (
+                <Fragment key={`${texto}-${index}`}>
+                  <p className="text-white">{texto}</p>
+                  {index < enumeracionItems.length - 1 ? (
+                    <span className="text-white/70" aria-hidden="true">
+                      •
+                    </span>
+                  ) : null}
+                </Fragment>
+              ))}
+            </div>
+          </>
         ) : null}
       </div>
     </section>

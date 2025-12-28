@@ -32,7 +32,7 @@ const Intro: FC<IntroProps> = ({ slice }) => {
         ) : null}
 
         {texto ? (
-          <p className="max-w-4xl mx-auto text-mineShaft text-center text-2xl mb-10 text-pretty">
+          <p className="max-w-4xl mx-auto text-mineShaft text-center text-lg lg:text-2xl mb-10 text-pretty">
             {texto}
           </p>
         ) : null}
