@@ -212,6 +212,17 @@ type PageDocumentDataSlicesSlice = HeroSlice;
  */
 interface PageDocumentData {
   /**
+   * Name field in *Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Nombre de la pagina
+   * - **API ID Path**: page.name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  name: prismic.KeyTextField;
+
+  /**
    * Slice Zone field in *Page*
    *
    * - **Field Type**: Slice Zone
@@ -264,7 +275,7 @@ interface PageDocumentData {
  * @typeParam Lang - Language API ID of the document.
  */
 export type PageDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithoutUID<Simplify<PageDocumentData>, "page", Lang>;
+  prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
 export type AllDocumentTypes =
   | FooterDocument
@@ -524,9 +535,57 @@ export type HeroSliceDefault = prismic.SharedSliceVariation<
 >;
 
 /**
+ * Primary content in *Hero → Impacto medio → Primary*
+ */
+export interface HeroSliceImpactoMedioPrimary {
+  /**
+   * Titulo field in *Hero → Impacto medio → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Titulo
+   * - **API ID Path**: hero.impactoMedio.primary.titulo
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  titulo: prismic.KeyTextField;
+
+  /**
+   * Subtitulo field in *Hero → Impacto medio → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.impactoMedio.primary.subtitulo
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  subtitulo: prismic.KeyTextField;
+
+  /**
+   * Background image field in *Hero → Impacto medio → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.impactoMedio.primary.background_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  background_image: prismic.ImageField<never>;
+}
+
+/**
+ * Impacto medio variation for Hero Slice
+ *
+ * - **API ID**: `impactoMedio`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type HeroSliceImpactoMedio = prismic.SharedSliceVariation<
+  "impactoMedio",
+  Simplify<HeroSliceImpactoMedioPrimary>,
+  never
+>;
+
+/**
  * Slice variation for *Hero*
  */
-type HeroSliceVariation = HeroSliceDefault;
+type HeroSliceVariation = HeroSliceDefault | HeroSliceImpactoMedio;
 
 /**
  * Hero Shared Slice
@@ -854,8 +913,10 @@ declare module "@prismicio/client" {
       HeroSlice,
       HeroSliceDefaultPrimaryEnumeracionItem,
       HeroSliceDefaultPrimary,
+      HeroSliceImpactoMedioPrimary,
       HeroSliceVariation,
       HeroSliceDefault,
+      HeroSliceImpactoMedio,
       IntroSlice,
       IntroSliceDefaultPrimaryEnumeracionItem,
       IntroSliceDefaultPrimary,

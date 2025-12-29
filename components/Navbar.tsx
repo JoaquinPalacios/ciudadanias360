@@ -4,6 +4,7 @@ import { SliceZone } from "@prismicio/react";
 import { components } from "@/slices";
 import { NavbarScroll } from "@/components/NavbarScroll";
 import { MobileMenuDrawer } from "@/components/MobileMenuDrawer";
+import Link from "next/link";
 
 type NavbarProps = {
   menu: Content.MenuDocument;
@@ -14,12 +15,12 @@ export const Navbar = ({ menu }: NavbarProps) => {
     <NavbarScroll>
       <div className="mx-auto w-full max-w-8xl relative z-20 px-6 py-5">
         <div className="flex items-center justify-between gap-8">
-          <div className="flex items-center gap-4 shrink-0">
+          <Link href="/" className="flex items-center gap-4 shrink-0">
             <Logo height={32} width={32} />
             <h3 className="text-tussok text-3xl font-bold">
               Ciudadanías <span className="font-normal">360</span>
             </h3>
-          </div>
+          </Link>
 
           <nav
             aria-label="Main navigation"

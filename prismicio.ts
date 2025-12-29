@@ -17,15 +17,14 @@ export const repositoryName =
  *
  * {@link https://prismic.io/docs/route-resolver#route-resolver}
  */
-// TODO: Update the routes array to match your project's route structure.
+// Route resolver used by `@prismicio/next` (e.g. `PrismicNextLink`) to generate
+// internal links for Prismic documents.
 const routes: Route[] = [
   // Homepage singleton
   { type: "home", path: "/" },
 
-  // Repeatable pages (enable once the `page` custom type exists in your Prismic repository)
-  ...(process.env.PRISMIC_ENABLE_PAGE_ROUTES === "true"
-    ? [{ type: "page", path: "/:uid" } satisfies Route]
-    : []),
+  // Repeatable pages
+  { type: "page", path: "/:uid" },
 ];
 
 /**

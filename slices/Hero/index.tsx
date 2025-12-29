@@ -16,19 +16,37 @@ export type HeroProps = SliceComponentProps<Content.HeroSlice>;
  * Component for "Hero" Slices.
  */
 const Hero: FC<HeroProps> = ({ slice }) => {
-  const {
-    titulo,
-    subtitulo,
-    background_image,
-    mostrar_boton_contacto,
-    mostrar_boton_calendario,
-    enumeracion,
-  } = slice.primary;
+  const { titulo, subtitulo, background_image } = slice.primary;
 
-  const enumeracionItems =
-    enumeracion
-      ?.map((item) => item.texto)
-      ?.filter((v): v is string => Boolean(v && v.trim())) ?? [];
+  const isImpactoMedio = slice.variation === "impactoMedio";
+
+  const hasCtasAndEnumeracion = (
+    primary: HeroProps["slice"]["primary"]
+  ): primary is Content.HeroSliceDefaultPrimary => {
+    return (
+      "mostrar_boton_contacto" in primary ||
+      "mostrar_boton_calendario" in primary ||
+      "enumeracion" in primary
+    );
+  };
+
+  const primaryWithCtas = hasCtasAndEnumeracion(slice.primary)
+    ? slice.primary
+    : null;
+
+  const mostrar_boton_contacto =
+    primaryWithCtas?.mostrar_boton_contacto ?? false;
+  const mostrar_boton_calendario =
+    primaryWithCtas?.mostrar_boton_calendario ?? false;
+
+  const enumeracionItems = (primaryWithCtas?.enumeracion ?? [])
+    .map((item) => item.texto)
+    .filter((v): v is string => Boolean(v && v.trim()));
+
+  const showCtas =
+    !isImpactoMedio && (mostrar_boton_contacto || mostrar_boton_calendario);
+
+  const showEnumeracion = !isImpactoMedio && enumeracionItems.length > 0;
 
   const renderTitleWithLastWordAccent = (text: string) => {
     const trimmed = text.trim();
@@ -91,15 +109,13 @@ const Hero: FC<HeroProps> = ({ slice }) => {
           <p
             className={cn(
               "max-w-4xl mx-auto text-white/90 text-center text-xl lg:text-2xl",
-              mostrar_boton_contacto || mostrar_boton_calendario
-                ? "mb-10"
-                : "mb-40"
+              showCtas ? "mb-10" : "mb-40"
             )}
           >
             {subtitulo}
           </p>
         ) : null}
-        {mostrar_boton_contacto || mostrar_boton_calendario ? (
+        {showCtas ? (
           <div className="flex gap-6 md:gap-12 justify-center mb-12 flex-col sm:flex-row">
             {mostrar_boton_calendario ? (
               <Button size="lg">Agendá una consulta</Button>
@@ -113,7 +129,7 @@ const Hero: FC<HeroProps> = ({ slice }) => {
           </div>
         ) : null}
 
-        {enumeracionItems.length ? (
+        {showEnumeracion ? (
           <>
             {/* Mobile: marquee */}
             <div className="md:hidden">
