@@ -19,13 +19,33 @@ export const repositoryName =
  */
 // Route resolver used by `@prismicio/next` (e.g. `PrismicNextLink`) to generate
 // internal links for Prismic documents.
-const routes: Route[] = [
+const baseRoutes: Route[] = [
   // Homepage singleton
   { type: "home", path: "/" },
 
   // Repeatable pages
   { type: "page", path: "/:uid" },
 ];
+
+/**
+ * IMPORTANT:
+ * Prismic validates the `routes` query param against the repository's known Custom Types.
+ * If you add route resolver entries for types that do not exist yet in the Prismic repo,
+ * *every* query can fail with: "[Link resolver error] Unknown type".
+ *
+ * Enable article routes only once the `article_index` and `article` custom types exist
+ * in your Prismic repository.
+ */
+const enableArticleRoutes =
+  process.env.NEXT_PUBLIC_PRISMIC_ENABLE_ARTICLES === "true";
+
+const routes: Route[] = enableArticleRoutes
+  ? [
+      ...baseRoutes,
+      { type: "article_index", path: "/articulos" },
+      { type: "article", path: "/articulos/:uid" },
+    ]
+  : baseRoutes;
 
 /**
  * Creates a Prismic client for the project's repository. The client is used to

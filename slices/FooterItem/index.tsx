@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Content, isFilled } from "@prismicio/client";
 import { PrismicNextLink } from "@prismicio/next";
 import { SliceComponentProps } from "@prismicio/react";
+import { linkResolver } from "@/lib/prismic/linkResolver";
 
 /**
  * Props for `FooterItem`.
@@ -44,6 +45,7 @@ const FooterItem: FC<FooterItemProps> = ({ slice }) => {
               <li key={idx}>
                 <PrismicNextLink
                   field={item.link}
+                  linkResolver={linkResolver}
                   className="text-white/80 hover:text-white transition-colors"
                 >
                   {text}

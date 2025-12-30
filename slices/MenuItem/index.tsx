@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Content, isFilled } from "@prismicio/client";
 import { PrismicNextLink } from "@prismicio/next";
 import { SliceComponentProps } from "@prismicio/react";
+import { linkResolver } from "@/lib/prismic/linkResolver";
 
 /**
  * Props for `MenuItem`.
@@ -34,7 +35,8 @@ const MenuItem: FC<MenuItemProps> = ({ slice }) => {
           <PrismicNextLink
             key={idx}
             field={item.link}
-            className="w-full lg:w-auto text-tussok hover:text-tussok transition-colors text-2xl lg:text-xl font-medium tracking-wide py-2"
+            linkResolver={linkResolver}
+            className="w-full lg:w-auto text-tussok hover:text-tussok transition-colors text-xl lg:text-lg font-medium tracking-wide py-2"
           >
             {text}
           </PrismicNextLink>
