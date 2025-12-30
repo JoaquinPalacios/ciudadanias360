@@ -52,8 +52,14 @@
     "Contactanos",
     "enumeracion",
     "Escribinos",
+    "ImpactoMedio",
     "lista",
+    "MitadMitad",
     "mostrar",
+    "primera",
+    "seccion",
+    "segunda",
     "Servicios"
-  ]
+  ],
+  "tailwindCSS.lint.suggestCanonicalClasses": "ignore"
 }

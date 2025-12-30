@@ -20,7 +20,8 @@
   /* Font sizes */
   --text-6xl: 4.25rem; /* 68px */
   --text-6xl-mobile: 2.5rem; /* 40px */
-  --text-4xl: 3.25rem; /* 52px */
+  --text-5xl: 3.25rem; /* 52px */
+  --text-4xl: 2.25rem; /* 36px */
   --text-3xl: 1.75rem; /* 28px */
 
   /* containers */
@@ -45,7 +46,7 @@
     font-size: var(--text-6xl);
   }
   h2 {
-    font-size: var(--text-4xl);
+    font-size: var(--text-5xl);
   }
 
   @media (max-width: 1024px) {

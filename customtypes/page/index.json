@@ -25,6 +25,15 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "cta": {
+              "type": "SharedSlice"
+            },
+            "mitad_mitad": {
+              "type": "SharedSlice"
+            },
+            "four_cards": {
+              "type": "SharedSlice"
+            },
             "hero": {
               "type": "SharedSlice"
             }

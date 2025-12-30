@@ -24,8 +24,8 @@
 				}
 			},
 			"whatsapp": {
-				"__TYPE__": "LinkContent",
 				"key": "882992f4-462c-4e2e-b412-eab48323b615",
+				"__TYPE__": "LinkContent",
 				"value": {
 					"__TYPE__": "ExternalLink",
 					"url": "https://slicemachine.dev",

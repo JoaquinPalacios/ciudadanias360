@@ -5,8 +5,10 @@ import dynamic from "next/dynamic";
 export const components = {
   cta: dynamic(() => import("./Cta")),
   footer_item: dynamic(() => import("./FooterItem")),
+  four_cards: dynamic(() => import("./FourCards")),
   hero: dynamic(() => import("./Hero")),
   intro: dynamic(() => import("./Intro")),
   menu_item: dynamic(() => import("./MenuItem")),
+  mitad_mitad: dynamic(() => import("./MitadMitad")),
   services: dynamic(() => import("./Services")),
 };

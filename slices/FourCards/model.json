@@ -1,0 +1,60 @@
+{
+  "id": "four_cards",
+  "type": "SharedSlice",
+  "name": "FourCards",
+  "description": "FourCards",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "titulo": {
+          "type": "Text",
+          "config": {
+            "label": "Titulo",
+            "placeholder": ""
+          }
+        },
+        "cards": {
+          "type": "Group",
+          "config": {
+            "label": "Cards",
+            "repeat": true,
+            "fields": {
+              "titulo": {
+                "type": "Text",
+                "config": {
+                  "label": "Titulo",
+                  "placeholder": ""
+                }
+              },
+              "texto": {
+                "type": "Text",
+                "config": {
+                  "label": "Texto",
+                  "placeholder": ""
+                }
+              },
+              "link": {
+                "type": "Link",
+                "config": {
+                  "label": "Link",
+                  "placeholder": "",
+                  "select": null,
+                  "allowTargetBlank": false,
+                  "allowText": true,
+                  "repeat": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

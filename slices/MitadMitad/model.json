@@ -1,0 +1,105 @@
+{
+  "id": "mitad_mitad",
+  "type": "SharedSlice",
+  "name": "MitadMitad",
+  "description": "MitadMitad",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "titulo": {
+          "type": "Text",
+          "config": {
+            "label": "Titulo",
+            "placeholder": ""
+          }
+        },
+        "subtitulo": {
+          "type": "Text",
+          "config": {
+            "label": "Subtitulo",
+            "placeholder": ""
+          }
+        },
+        "cards": {
+          "type": "Group",
+          "config": {
+            "label": "Cards",
+            "repeat": true,
+            "fields": {
+              "imagen_primera": {
+                "type": "Boolean",
+                "config": {
+                  "label": "Imagen primera",
+                  "placeholder_false": "false",
+                  "placeholder_true": "true",
+                  "default_value": false
+                }
+              },
+              "background_image": {
+                "type": "Image",
+                "config": {
+                  "label": "Background image",
+                  "constraint": {},
+                  "thumbnails": []
+                }
+              },
+              "titulo": {
+                "type": "Text",
+                "config": {
+                  "label": "Titulo",
+                  "placeholder": ""
+                }
+              },
+              "intro": {
+                "type": "Text",
+                "config": {
+                  "label": "Intro",
+                  "placeholder": ""
+                }
+              },
+              "titulo_seccion": {
+                "type": "Text",
+                "config": {
+                  "label": "Titulo sección",
+                  "placeholder": ""
+                }
+              },
+              "enumeracion": {
+                "type": "StructuredText",
+                "config": {
+                  "label": "Enumeracion",
+                  "placeholder": "",
+                  "allowTargetBlank": true,
+                  "multi": "list-item"
+                }
+              },
+              "titulo_segunda_seccion": {
+                "type": "Text",
+                "config": {
+                  "label": "Titulo segunda sección",
+                  "placeholder": ""
+                }
+              },
+              "segunda_enumeracion": {
+                "type": "StructuredText",
+                "config": {
+                  "label": "Segunda enumeracion",
+                  "placeholder": "",
+                  "allowTargetBlank": true,
+                  "multi": "list-item"
+                }
+              }
+            }
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

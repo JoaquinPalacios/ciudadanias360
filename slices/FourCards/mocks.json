@@ -1,0 +1,52 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"titulo": {
+				"__TYPE__": "FieldContent",
+				"value": "needs",
+				"type": "Text"
+			},
+			"cards": {
+				"__TYPE__": "GroupContentType",
+				"value": [
+					{
+						"__TYPE__": "GroupItemContent",
+						"value": [
+							[
+								"titulo",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "being",
+									"type": "Text"
+								}
+							],
+							[
+								"texto",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "stove",
+									"type": "Text"
+								}
+							],
+							[
+								"link",
+								{
+									"key": "6b766c4d-37f7-4ad7-b127-08923998439a",
+									"__TYPE__": "LinkContent",
+									"value": {
+										"__TYPE__": "ExternalLink",
+										"url": "https://prismic.io",
+										"text": "turn"
+									}
+								}
+							]
+						]
+					}
+				]
+			}
+		},
+		"items": []
+	}
+]

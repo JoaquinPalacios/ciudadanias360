@@ -94,9 +94,26 @@ const Hero: FC<HeroProps> = ({ slice }) => {
         className="absolute inset-0 opacity-10 lg:opacity-15 z-10 pointer-events-none select-none"
         aria-hidden="true"
       >
-        <div className="absolute top-20 left-20 size-32 lg:size-64 border-2 border-tussok rounded-full" />
-        <div className="absolute bottom-20 right-20 size-48 lg:size-96 border-2 border-tussok rounded-full" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-72 lg:size-[600px] border border-white rounded-full" />
+        <div
+          className={cn(
+            "absolute top-20 left-20 border-2 border-tussok rounded-full",
+            isImpactoMedio ? "size-28 lg:size-60" : "size-32 lg:size-64"
+          )}
+        />
+        <div
+          className={cn(
+            "absolute bottom-20 right-20 border-2 border-tussok rounded-full",
+            isImpactoMedio ? "size-40 lg:size-72" : "size-48 lg:size-96"
+          )}
+        />
+        <div
+          className={cn(
+            "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border border-white rounded-full",
+            isImpactoMedio
+              ? "size-56 lg:size-[30rem]"
+              : "size-72 lg:size-[37.5rem]"
+          )}
+        />
       </div>
       <div className="mx-auto flex w-full max-w-8xl flex-col lg:gap-6 relative z-20 mt-20 md:mt-28 lg:mt-40 mb-6 lg:mb-10">
         {titulo ? (

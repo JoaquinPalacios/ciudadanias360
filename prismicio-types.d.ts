@@ -205,7 +205,11 @@ interface MenuDocumentData {
 export type MenuDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<MenuDocumentData>, "menu", Lang>;
 
-type PageDocumentDataSlicesSlice = HeroSlice;
+type PageDocumentDataSlicesSlice =
+  | CtaSlice
+  | MitadMitadSlice
+  | FourCardsSlice
+  | HeroSlice;
 
 /**
  * Content for Page documents
@@ -435,6 +439,96 @@ type FooterItemSliceVariation = FooterItemSliceDefault;
 export type FooterItemSlice = prismic.SharedSlice<
   "footer_item",
   FooterItemSliceVariation
+>;
+
+/**
+ * Item in *FourCards → Default → Primary → Cards*
+ */
+export interface FourCardsSliceDefaultPrimaryCardsItem {
+  /**
+   * Titulo field in *FourCards → Default → Primary → Cards*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: four_cards.default.primary.cards[].titulo
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  titulo: prismic.KeyTextField;
+
+  /**
+   * Texto field in *FourCards → Default → Primary → Cards*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: four_cards.default.primary.cards[].texto
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  texto: prismic.KeyTextField;
+
+  /**
+   * Link field in *FourCards → Default → Primary → Cards*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: four_cards.default.primary.cards[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Primary content in *FourCards → Default → Primary*
+ */
+export interface FourCardsSliceDefaultPrimary {
+  /**
+   * Titulo field in *FourCards → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: four_cards.default.primary.titulo
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  titulo: prismic.KeyTextField;
+
+  /**
+   * Cards field in *FourCards → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: four_cards.default.primary.cards[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  cards: prismic.GroupField<Simplify<FourCardsSliceDefaultPrimaryCardsItem>>;
+}
+
+/**
+ * Default variation for FourCards Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FourCardsSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<FourCardsSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *FourCards*
+ */
+type FourCardsSliceVariation = FourCardsSliceDefault;
+
+/**
+ * FourCards Shared Slice
+ *
+ * - **API ID**: `four_cards`
+ * - **Description**: FourCards
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FourCardsSlice = prismic.SharedSlice<
+  "four_cards",
+  FourCardsSliceVariation
 >;
 
 /**
@@ -756,6 +850,157 @@ export type MenuItemSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Item in *MitadMitad → Default → Primary → Cards*
+ */
+export interface MitadMitadSliceDefaultPrimaryCardsItem {
+  /**
+   * Imagen primera field in *MitadMitad → Default → Primary → Cards*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: mitad_mitad.default.primary.cards[].imagen_primera
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  imagen_primera: prismic.BooleanField;
+
+  /**
+   * Background image field in *MitadMitad → Default → Primary → Cards*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: mitad_mitad.default.primary.cards[].background_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  background_image: prismic.ImageField<never>;
+
+  /**
+   * Titulo field in *MitadMitad → Default → Primary → Cards*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: mitad_mitad.default.primary.cards[].titulo
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  titulo: prismic.KeyTextField;
+
+  /**
+   * Intro field in *MitadMitad → Default → Primary → Cards*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: mitad_mitad.default.primary.cards[].intro
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  intro: prismic.KeyTextField;
+
+  /**
+   * Titulo sección field in *MitadMitad → Default → Primary → Cards*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: mitad_mitad.default.primary.cards[].titulo_seccion
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  titulo_seccion: prismic.KeyTextField;
+
+  /**
+   * Enumeracion field in *MitadMitad → Default → Primary → Cards*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: mitad_mitad.default.primary.cards[].enumeracion
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  enumeracion: prismic.RichTextField;
+
+  /**
+   * Titulo segunda sección field in *MitadMitad → Default → Primary → Cards*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: mitad_mitad.default.primary.cards[].titulo_segunda_seccion
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  titulo_segunda_seccion: prismic.KeyTextField;
+
+  /**
+   * Segunda enumeracion field in *MitadMitad → Default → Primary → Cards*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: mitad_mitad.default.primary.cards[].segunda_enumeracion
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  segunda_enumeracion: prismic.RichTextField;
+}
+
+/**
+ * Primary content in *MitadMitad → Default → Primary*
+ */
+export interface MitadMitadSliceDefaultPrimary {
+  /**
+   * Titulo field in *MitadMitad → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: mitad_mitad.default.primary.titulo
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  titulo: prismic.KeyTextField;
+
+  /**
+   * Subtitulo field in *MitadMitad → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: mitad_mitad.default.primary.subtitulo
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  subtitulo: prismic.KeyTextField;
+
+  /**
+   * Cards field in *MitadMitad → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: mitad_mitad.default.primary.cards[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  cards: prismic.GroupField<Simplify<MitadMitadSliceDefaultPrimaryCardsItem>>;
+}
+
+/**
+ * Default variation for MitadMitad Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type MitadMitadSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<MitadMitadSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *MitadMitad*
+ */
+type MitadMitadSliceVariation = MitadMitadSliceDefault;
+
+/**
+ * MitadMitad Shared Slice
+ *
+ * - **API ID**: `mitad_mitad`
+ * - **Description**: MitadMitad
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type MitadMitadSlice = prismic.SharedSlice<
+  "mitad_mitad",
+  MitadMitadSliceVariation
+>;
+
+/**
  * Item in *Services → Default → Primary → Cards*
  */
 export interface ServicesSliceDefaultPrimaryCardsItem {
@@ -910,6 +1155,11 @@ declare module "@prismicio/client" {
       FooterItemSliceDefaultPrimary,
       FooterItemSliceVariation,
       FooterItemSliceDefault,
+      FourCardsSlice,
+      FourCardsSliceDefaultPrimaryCardsItem,
+      FourCardsSliceDefaultPrimary,
+      FourCardsSliceVariation,
+      FourCardsSliceDefault,
       HeroSlice,
       HeroSliceDefaultPrimaryEnumeracionItem,
       HeroSliceDefaultPrimary,
@@ -927,6 +1177,11 @@ declare module "@prismicio/client" {
       MenuItemSliceDefaultPrimary,
       MenuItemSliceVariation,
       MenuItemSliceDefault,
+      MitadMitadSlice,
+      MitadMitadSliceDefaultPrimaryCardsItem,
+      MitadMitadSliceDefaultPrimary,
+      MitadMitadSliceVariation,
+      MitadMitadSliceDefault,
       ServicesSlice,
       ServicesSliceDefaultPrimaryCardsItem,
       ServicesSliceDefaultPrimary,
