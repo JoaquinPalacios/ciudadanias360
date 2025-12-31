@@ -28,8 +28,7 @@ type PickContentRelationshipFieldData<
       TSubRelationship["customtypes"],
       TLang
     >;
-  } & {
-    // Group
+  } & { // Group
     [TGroup in Extract<
       TRelationship["fields"][number],
       | prismic.CustomTypeModelFetchGroupLevel1
@@ -41,8 +40,7 @@ type PickContentRelationshipFieldData<
           PickContentRelationshipFieldData<TGroup, TGroupData, TLang>
         >
       : never;
-  } & {
-    // Other fields
+  } & { // Other fields
     [TFieldKey in Extract<
       TRelationship["fields"][number],
       string
@@ -129,7 +127,7 @@ interface ArticleDocumentData {
   author: prismic.ContentRelationshipField<"author">;
 
   /**
-   * Category field in *Article*
+   * Categoría field in *Article*
    *
    * - **Field Type**: Content Relationship
    * - **Placeholder**: *None*
@@ -303,11 +301,11 @@ export type AuthorDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<AuthorDocumentData>, "author", Lang>;
 
 /**
- * Content for Category documents
+ * Content for Categoría documents
  */
 interface CategoryDocumentData {
   /**
-   * Name field in *Categoría*
+   * Nombre field in *Categoría*
    *
    * - **Field Type**: Text
    * - **Placeholder**: Ciudadanías
@@ -319,7 +317,7 @@ interface CategoryDocumentData {
 }
 
 /**
- * Category document from Prismic
+ * Categoría document from Prismic
  *
  * - **API ID**: `category`
  * - **Repeatable**: `true`

@@ -6,6 +6,7 @@ import { PrismicNextImage } from "@prismicio/next";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { richTextComponents } from "@/lib/prismic/richText";
 import { createClient } from "@/prismicio";
+import type { ImageFieldImage } from "@prismicio/client";
 
 type Params = { uid: string };
 
@@ -22,6 +23,20 @@ const getAuthorName = (author: unknown): string | undefined => {
   if (!data || typeof data !== "object") return undefined;
   const name = (data as { name?: unknown }).name;
   return typeof name === "string" && name.trim() ? name : undefined;
+};
+
+const isImageFieldImage = (value: unknown): value is ImageFieldImage => {
+  if (!value || typeof value !== "object") return false;
+  return "url" in value && "dimensions" in value;
+};
+
+const getAuthorAvatarImage = (author: unknown): ImageFieldImage | undefined => {
+  if (!author || typeof author !== "object") return undefined;
+  if (!("data" in author)) return undefined;
+  const data = (author as { data?: unknown }).data;
+  if (!data || typeof data !== "object") return undefined;
+  const avatar = (data as { avatar?: unknown }).avatar;
+  return isImageFieldImage(avatar) ? avatar : undefined;
 };
 
 const getCategoryName = (category: unknown): string | undefined => {
@@ -86,7 +101,9 @@ export default async function ArticuloPage({
   const client = createClient();
 
   const article = await client
-    .getByUID("article", uid, { fetchLinks: ["author.name", "category.name"] })
+    .getByUID("article", uid, {
+      fetchLinks: ["author.name", "author.avatar", "category.name"],
+    })
     .catch(() => notFound());
 
   const title =
@@ -95,6 +112,7 @@ export default async function ArticuloPage({
       : "Artículo";
 
   const authorName = getAuthorName(article.data.author);
+  const authorAvatarImage = getAuthorAvatarImage(article.data.author);
   const categoryName = getCategoryName(article.data.category);
 
   const dateLabel =
@@ -148,12 +166,34 @@ export default async function ArticuloPage({
           </article>
         ) : null}
 
-        {authorName ? (
-          <footer className="mt-10 pt-6 border-t border-black/5">
-            <p className="text-sm text-codGray/70">
-              <span className="font-medium text-codGray/90">Autor:</span>{" "}
-              {authorName}
-            </p>
+        {authorName || authorAvatarImage ? (
+          <footer className="mt-14 pt-10 border-t border-black/10">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-6">
+              {authorAvatarImage ? (
+                <div className="shrink-0">
+                  <div className="relative size-16 overflow-hidden rounded-full bg-carrara border border-black/5">
+                    <PrismicNextImage
+                      field={authorAvatarImage}
+                      fallbackAlt=""
+                      fill
+                      className="object-cover"
+                      sizes="64px"
+                    />
+                  </div>
+                </div>
+              ) : null}
+
+              <div>
+                {authorName ? (
+                  <p className="text-finn md:text-lg font-semibold leading-none text-pretty mb-1">
+                    {authorName}
+                  </p>
+                ) : null}
+                <p className="text-tussok text-pretty">
+                  Especialista en derecho internacional y procesos migratorios
+                </p>
+              </div>
+            </div>
           </footer>
         ) : null}
       </div>
