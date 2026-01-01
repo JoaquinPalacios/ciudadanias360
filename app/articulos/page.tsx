@@ -5,21 +5,8 @@ import { PrismicNextImage } from "@prismicio/next";
 
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
-
-const formatDate = (value: string) => {
-  const d = new Date(value);
-  if (Number.isNaN(d.getTime())) return value;
-  return new Intl.DateTimeFormat("es-AR", { dateStyle: "medium" }).format(d);
-};
-
-const getCategoryName = (category: unknown): string | undefined => {
-  if (!category || typeof category !== "object") return undefined;
-  if (!("data" in category)) return undefined;
-  const data = (category as { data?: unknown }).data;
-  if (!data || typeof data !== "object") return undefined;
-  const name = (data as { name?: unknown }).name;
-  return typeof name === "string" && name.trim() ? name : undefined;
-};
+import { formatEsArDate } from "@/lib/articles/articleFormat";
+import { getCategoryName } from "@/lib/articles/articleFields";
 
 export async function generateMetadata(): Promise<Metadata> {
   const client = createClient();
@@ -83,7 +70,7 @@ export default async function ArticulosIndexPage() {
                 const dateLabel =
                   article.data.publish_date &&
                   typeof article.data.publish_date === "string"
-                    ? formatDate(article.data.publish_date)
+                    ? formatEsArDate(article.data.publish_date, "medium")
                     : undefined;
 
                 return (
@@ -99,9 +86,10 @@ export default async function ArticulosIndexPage() {
                           fill
                           className="object-cover"
                           sizes="(min-width: 1280px) 380px, (min-width: 768px) 45vw, 100vw"
+                          fallbackAlt=""
                         />
                         {categoryName ? (
-                          <p className="absolute bottom-3 left-3 text-xs font-medium text-white/90 bg-finn backdrop-blur-sm rounded-full px-3 py-1">
+                          <p className="absolute bottom-3 left-3 text-xs font-medium text-white/90 bg-finn backdrop-blur-sm rounded-full px-3 py-1 shadow">
                             {categoryName}
                           </p>
                         ) : null}
@@ -113,7 +101,7 @@ export default async function ArticulosIndexPage() {
                         <p className="text-xs text-codGray/60">{dateLabel}</p>
                       ) : null}
 
-                      <h2 className="mt-2 text-xl font-semibold text-finn text-pretty group-hover:underline underline-offset-4">
+                      <h2 className="mt-2 text-xl font-semibold text-finn text-pretty group-hover:underline underline-offset-4 line-clamp-2">
                         {article.data.title || "Sin título"}
                       </h2>
 

@@ -68,12 +68,12 @@ const Hero: FC<HeroProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="px-4 py-12 lg:px-6 lg:py-16 relative overflow-hidden"
+      className="px-4 pb-12 pt-32 lg:px-6 lg:pb-16 lg:pt-36 relative overflow-hidden bg-tamarind -mt-20"
     >
       {/* Background image (optional) */}
       {background_image?.url ? (
         <div
-          className="absolute inset-0 z-0 pointer-events-none select-none"
+          className="absolute inset-0 top-20 z-0 pointer-events-none select-none"
           aria-hidden="true"
         >
           <PrismicNextImage
@@ -91,7 +91,7 @@ const Hero: FC<HeroProps> = ({ slice }) => {
 
       {/* Animated background pattern */}
       <div
-        className="absolute inset-0 opacity-10 lg:opacity-15 z-10 pointer-events-none select-none"
+        className="absolute inset-0 top-20 opacity-10 lg:opacity-15 z-10 pointer-events-none select-none"
         aria-hidden="true"
       >
         <div
@@ -115,7 +115,7 @@ const Hero: FC<HeroProps> = ({ slice }) => {
           )}
         />
       </div>
-      <div className="mx-auto flex w-full max-w-8xl flex-col lg:gap-6 relative z-20 mt-20 md:mt-28 lg:mt-40 mb-6 lg:mb-10">
+      <div className="mx-auto flex w-full max-w-8xl flex-col lg:gap-6 relative z-20 mt-40 md:mt-48 lg:mt-60 mb-6 lg:mb-10">
         {titulo ? (
           <h1 className="text-white text-center max-w-5xl mx-auto leading-none mb-8 lg:mb-10">
             {renderTitleWithLastWordAccent(titulo)}

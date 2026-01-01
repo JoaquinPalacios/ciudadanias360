@@ -36,6 +36,7 @@ export function NavbarScroll({
 }: NavbarScrollProps) {
   const headerRef = useRef<HTMLElement | null>(null);
   const controlsRef = useRef<ReturnType<typeof animate> | null>(null);
+  const animationIdRef = useRef(0);
 
   const lastScrollYRef = useRef<number>(0);
   const directionRef = useRef<"up" | "down" | null>(null);
@@ -44,8 +45,14 @@ export function NavbarScroll({
 
   const [isVisible, setIsVisible] = useState(true);
   const isVisibleRef = useRef(true);
+  const [isFullyVisible, setIsFullyVisible] = useState(true);
 
   const [reduceMotion, setReduceMotion] = useState(false);
+  const reduceMotionRef = useRef(false);
+
+  useEffect(() => {
+    reduceMotionRef.current = reduceMotion;
+  }, [reduceMotion]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -78,6 +85,7 @@ export function NavbarScroll({
           if (!isVisibleRef.current) {
             isVisibleRef.current = true;
             setIsVisible(true);
+            setIsFullyVisible(reduceMotionRef.current ? true : false);
           }
           directionRef.current = null;
           directionStartYRef.current = y;
@@ -89,6 +97,7 @@ export function NavbarScroll({
           if (!isVisibleRef.current) {
             isVisibleRef.current = true;
             setIsVisible(true);
+            setIsFullyVisible(reduceMotionRef.current ? true : false);
           }
           directionRef.current = null;
           directionStartYRef.current = y;
@@ -113,6 +122,7 @@ export function NavbarScroll({
           if (isVisibleRef.current) {
             isVisibleRef.current = false;
             setIsVisible(false);
+            setIsFullyVisible(false);
           }
           return;
         }
@@ -122,6 +132,7 @@ export function NavbarScroll({
           if (!isVisibleRef.current) {
             isVisibleRef.current = true;
             setIsVisible(true);
+            setIsFullyVisible(reduceMotionRef.current ? true : false);
           }
         }
       });
@@ -139,6 +150,7 @@ export function NavbarScroll({
     if (!el) return;
 
     const targetY = isVisible ? 0 : -el.offsetHeight;
+    const animationId = ++animationIdRef.current;
 
     // Cancel any in-flight animation.
     try {
@@ -159,6 +171,20 @@ export function NavbarScroll({
         easing: [0.22, 1, 0.36, 1],
       } as unknown as never
     );
+
+    const finished: Promise<unknown> | undefined = (
+      controlsRef.current as unknown as {
+        finished?: Promise<unknown>;
+      }
+    )?.finished;
+
+    if (isVisible && !reduceMotion && finished) {
+      void finished.then(() => {
+        // Ignore if a newer animation started.
+        if (animationIdRef.current !== animationId) return;
+        setIsFullyVisible(true);
+      });
+    }
   }, [isVisible, reduceMotion]);
 
   return (
@@ -166,7 +192,8 @@ export function NavbarScroll({
       ref={headerRef}
       className={cn(
         "sticky top-0 z-50 will-change-transform",
-        "bg-tamarind border-b border-white/20",
+        "bg-tamarind",
+        isVisible && isFullyVisible && "border-b border-white/20",
         className
       )}
     >
