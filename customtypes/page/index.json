@@ -25,6 +25,12 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "preguntas_frecuentes": {
+              "type": "SharedSlice"
+            },
+            "formulario": {
+              "type": "SharedSlice"
+            },
             "cta": {
               "type": "SharedSlice"
             },

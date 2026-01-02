@@ -1,0 +1,35 @@
+{
+  "id": "formulario",
+  "type": "SharedSlice",
+  "name": "Formulario",
+  "description": "Formulario",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "titulo": {
+          "type": "Text",
+          "config": {
+            "label": "Titulo",
+            "placeholder": ""
+          }
+        },
+        "contenido": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Contenido",
+            "placeholder": "",
+            "allowTargetBlank": false,
+            "multi": "paragraph,list-item,strong"
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

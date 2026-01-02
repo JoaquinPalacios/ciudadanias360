@@ -1,0 +1,25 @@
+[
+  {
+    "__TYPE__": "SharedSliceContent",
+    "variation": "default",
+    "primary": {
+      "titulo": {
+        "__TYPE__": "FieldContent",
+        "value": "reach",
+        "type": "Text"
+      },
+      "contenido": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "paragraph",
+            "content": {
+              "text": "Ipsum magna aute in mollit minim eiusmod laborum consectetur nulla. Est excepteur do exercitation nisi id esse excepteur magna dolor id consectetur."
+            }
+          }
+        ]
+      }
+    },
+    "items": []
+  }
+]

@@ -1,0 +1,45 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"titulo": {
+				"__TYPE__": "FieldContent",
+				"value": "got",
+				"type": "Text"
+			},
+			"texto": {
+				"__TYPE__": "FieldContent",
+				"value": "alphabet",
+				"type": "Text"
+			},
+			"preguntas_frecuentes": {
+				"__TYPE__": "GroupContentType",
+				"value": [
+					{
+						"__TYPE__": "GroupItemContent",
+						"value": [
+							[
+								"pregunta",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "carefully",
+									"type": "Text"
+								}
+							],
+							[
+								"respuesta",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "behind",
+									"type": "Text"
+								}
+							]
+						]
+					}
+				]
+			}
+		},
+		"items": []
+	}
+]

@@ -28,7 +28,8 @@ type PickContentRelationshipFieldData<
       TSubRelationship["customtypes"],
       TLang
     >;
-  } & { // Group
+  } & // Group
+  {
     [TGroup in Extract<
       TRelationship["fields"][number],
       | prismic.CustomTypeModelFetchGroupLevel1
@@ -40,7 +41,8 @@ type PickContentRelationshipFieldData<
           PickContentRelationshipFieldData<TGroup, TGroupData, TLang>
         >
       : never;
-  } & { // Other fields
+  } & // Other fields
+  {
     [TFieldKey in Extract<
       TRelationship["fields"][number],
       string
@@ -469,6 +471,8 @@ export type MenuDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<MenuDocumentData>, "menu", Lang>;
 
 type PageDocumentDataSlicesSlice =
+  | PreguntasFrecuentesSlice
+  | FormularioSlice
   | CtaSlice
   | MitadMitadSlice
   | FourCardsSlice
@@ -706,6 +710,61 @@ type FooterItemSliceVariation = FooterItemSliceDefault;
 export type FooterItemSlice = prismic.SharedSlice<
   "footer_item",
   FooterItemSliceVariation
+>;
+
+/**
+ * Primary content in *Formulario → Default → Primary*
+ */
+export interface FormularioSliceDefaultPrimary {
+  /**
+   * Titulo field in *Formulario → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: formulario.default.primary.titulo
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  titulo: prismic.KeyTextField;
+
+  /**
+   * Contenido field in *Formulario → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: formulario.default.primary.contenido
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  contenido: prismic.RichTextField;
+}
+
+/**
+ * Default variation for Formulario Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FormularioSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<FormularioSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Formulario*
+ */
+type FormularioSliceVariation = FormularioSliceDefault;
+
+/**
+ * Formulario Shared Slice
+ *
+ * - **API ID**: `formulario`
+ * - **Description**: Formulario
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FormularioSlice = prismic.SharedSlice<
+  "formulario",
+  FormularioSliceVariation
 >;
 
 /**
@@ -1268,6 +1327,98 @@ export type MitadMitadSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Item in *PreguntasFrecuentes → Default → Primary → Preguntas frecuentes*
+ */
+export interface PreguntasFrecuentesSliceDefaultPrimaryPreguntasFrecuentesItem {
+  /**
+   * Pregunta field in *PreguntasFrecuentes → Default → Primary → Preguntas frecuentes*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: preguntas_frecuentes.default.primary.preguntas_frecuentes[].pregunta
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  pregunta: prismic.KeyTextField;
+
+  /**
+   * Respuesta field in *PreguntasFrecuentes → Default → Primary → Preguntas frecuentes*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: preguntas_frecuentes.default.primary.preguntas_frecuentes[].respuesta
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  respuesta: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *PreguntasFrecuentes → Default → Primary*
+ */
+export interface PreguntasFrecuentesSliceDefaultPrimary {
+  /**
+   * Titulo field in *PreguntasFrecuentes → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: preguntas_frecuentes.default.primary.titulo
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  titulo: prismic.KeyTextField;
+
+  /**
+   * Texto field in *PreguntasFrecuentes → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: preguntas_frecuentes.default.primary.texto
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  texto: prismic.KeyTextField;
+
+  /**
+   * Preguntas frecuentes field in *PreguntasFrecuentes → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: preguntas_frecuentes.default.primary.preguntas_frecuentes[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  preguntas_frecuentes: prismic.GroupField<
+    Simplify<PreguntasFrecuentesSliceDefaultPrimaryPreguntasFrecuentesItem>
+  >;
+}
+
+/**
+ * Default variation for PreguntasFrecuentes Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type PreguntasFrecuentesSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<PreguntasFrecuentesSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *PreguntasFrecuentes*
+ */
+type PreguntasFrecuentesSliceVariation = PreguntasFrecuentesSliceDefault;
+
+/**
+ * PreguntasFrecuentes Shared Slice
+ *
+ * - **API ID**: `preguntas_frecuentes`
+ * - **Description**: PreguntasFrecuentes
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type PreguntasFrecuentesSlice = prismic.SharedSlice<
+  "preguntas_frecuentes",
+  PreguntasFrecuentesSliceVariation
+>;
+
+/**
  * Item in *Services → Default → Primary → Cards*
  */
 export interface ServicesSliceDefaultPrimaryCardsItem {
@@ -1383,14 +1534,14 @@ declare module "@prismicio/client" {
   interface CreateClient {
     (
       repositoryNameOrEndpoint: string,
-      options?: prismic.ClientConfig
+      options?: prismic.ClientConfig,
     ): prismic.Client<AllDocumentTypes>;
   }
 
   interface CreateWriteClient {
     (
       repositoryNameOrEndpoint: string,
-      options: prismic.WriteClientConfig
+      options: prismic.WriteClientConfig,
     ): prismic.WriteClient<AllDocumentTypes>;
   }
 
@@ -1431,6 +1582,10 @@ declare module "@prismicio/client" {
       FooterItemSliceDefaultPrimary,
       FooterItemSliceVariation,
       FooterItemSliceDefault,
+      FormularioSlice,
+      FormularioSliceDefaultPrimary,
+      FormularioSliceVariation,
+      FormularioSliceDefault,
       FourCardsSlice,
       FourCardsSliceDefaultPrimaryCardsItem,
       FourCardsSliceDefaultPrimary,
@@ -1458,6 +1613,11 @@ declare module "@prismicio/client" {
       MitadMitadSliceDefaultPrimary,
       MitadMitadSliceVariation,
       MitadMitadSliceDefault,
+      PreguntasFrecuentesSlice,
+      PreguntasFrecuentesSliceDefaultPrimaryPreguntasFrecuentesItem,
+      PreguntasFrecuentesSliceDefaultPrimary,
+      PreguntasFrecuentesSliceVariation,
+      PreguntasFrecuentesSliceDefault,
       ServicesSlice,
       ServicesSliceDefaultPrimaryCardsItem,
       ServicesSliceDefaultPrimary,

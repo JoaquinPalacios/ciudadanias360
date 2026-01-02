@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn, truncateText } from "@/lib/utils";
 
 export type BreadcrumbItem = {
   label: string;
@@ -9,9 +9,20 @@ export type BreadcrumbItem = {
 type Props = {
   items: BreadcrumbItem[];
   className?: string;
+  /**
+   * Truncates long breadcrumb labels for readability.
+   * Full label is preserved in a `title` tooltip when truncated.
+   */
+  maxItemLength?: number;
+  maxLastItemLength?: number;
 };
 
-export const Breadcrumbs = ({ items, className }: Props) => {
+export const Breadcrumbs = ({
+  items,
+  className,
+  maxItemLength = 40,
+  maxLastItemLength = 32,
+}: Props) => {
   if (!items.length) return null;
 
   return (
@@ -20,6 +31,11 @@ export const Breadcrumbs = ({ items, className }: Props) => {
         {items.map((item, idx) => {
           const isLast = idx === items.length - 1;
           const showLink = Boolean(item.href && !isLast);
+          const resolvedMaxLength = isLast ? maxLastItemLength : maxItemLength;
+          const displayLabel = truncateText(item.label, {
+            maxLength: resolvedMaxLength,
+          });
+          const isTruncated = displayLabel !== item.label.trim();
 
           return (
             <li
@@ -36,15 +52,17 @@ export const Breadcrumbs = ({ items, className }: Props) => {
                 <Link
                   href={item.href as string}
                   className="hover:underline underline-offset-4"
+                  title={isTruncated ? item.label : undefined}
                 >
-                  {item.label}
+                  {displayLabel}
                 </Link>
               ) : (
                 <span
                   aria-current={isLast ? "page" : undefined}
                   className={cn(isLast && "text-codGray/90 font-medium")}
+                  title={isTruncated ? item.label : undefined}
                 >
-                  {item.label}
+                  {displayLabel}
                 </span>
               )}
             </li>
