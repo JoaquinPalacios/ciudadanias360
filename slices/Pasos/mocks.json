@@ -1,0 +1,40 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"titulo": {
+				"__TYPE__": "FieldContent",
+				"value": "between",
+				"type": "Text"
+			},
+			"pasos": {
+				"__TYPE__": "GroupContentType",
+				"value": [
+					{
+						"__TYPE__": "GroupItemContent",
+						"value": [
+							[
+								"paso",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "particular",
+									"type": "Text"
+								}
+							],
+							[
+								"descripcion_del_paso",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "flame",
+									"type": "Text"
+								}
+							]
+						]
+					}
+				]
+			}
+		},
+		"items": []
+	}
+]

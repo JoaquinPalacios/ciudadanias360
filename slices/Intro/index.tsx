@@ -24,6 +24,10 @@ const Intro: FC<IntroProps> = ({ slice }) => {
       data-slice-variation={slice.variation}
       className="px-4 py-12 lg:px-6 lg:py-20 relative overflow-hidden bg-carrara"
     >
+      <div className="absolute inset-0 pointer-events-none opacity-60">
+        <div className="absolute top-0 -left-24 h-72 w-72 rounded-full bg-laser/15 blur-3xl" />
+      </div>
+
       <div className="mx-auto flex w-full max-w-8xl flex-col gap-6 relative z-20">
         {titulo ? (
           <h2 className="text-finn text-center max-w-4xl mx-auto leading-none text-pretty">

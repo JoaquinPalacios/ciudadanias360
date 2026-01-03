@@ -57,70 +57,68 @@ export default async function ArticulosIndexPage() {
 
       <section
         aria-label="Listado de artículos"
-        className="px-4 py-12 lg:px-6 lg:py-16"
+        className="px-4 py-12 lg:px-6 lg:py-16 mx-auto w-full max-w-8xl"
       >
-        <div className="mx-auto w-full max-w-7xl">
-          {articles.length ? (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {articles.map((article) => {
-                const href = article.uid
-                  ? `/articulos/${article.uid}`
-                  : "/articulos";
-                const categoryName = getCategoryName(article.data.category);
-                const dateLabel =
-                  article.data.publish_date &&
-                  typeof article.data.publish_date === "string"
-                    ? formatEsArDate(article.data.publish_date, "medium")
-                    : undefined;
+        {articles.length ? (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8">
+            {articles.map((article) => {
+              const href = article.uid
+                ? `/articulos/${article.uid}`
+                : "/articulos";
+              const categoryName = getCategoryName(article.data.category);
+              const dateLabel =
+                article.data.publish_date &&
+                typeof article.data.publish_date === "string"
+                  ? formatEsArDate(article.data.publish_date, "medium")
+                  : undefined;
 
-                return (
-                  <Link
-                    key={article.id}
-                    href={href}
-                    className="group bg-white rounded-xl border border-black/5 shadow-sm overflow-hidden hover:shadow-md hover:border-black/10 transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tussok/30 focus-visible:ring-offset-2 focus-visible:ring-offset-carrara"
-                  >
-                    {article.data.featured_image ? (
-                      <div className="relative aspect-[16/9] bg-carrara">
-                        <PrismicNextImage
-                          field={article.data.featured_image}
-                          fill
-                          className="object-cover"
-                          sizes="(min-width: 1280px) 380px, (min-width: 768px) 45vw, 100vw"
-                          fallbackAlt=""
-                        />
-                        {categoryName ? (
-                          <p className="absolute bottom-3 left-3 text-xs font-medium text-white/90 bg-finn backdrop-blur-sm rounded-full px-3 py-1 shadow">
-                            {categoryName}
-                          </p>
-                        ) : null}
-                      </div>
-                    ) : null}
-
-                    <div className="p-5">
-                      {dateLabel ? (
-                        <p className="text-xs text-codGray/60">{dateLabel}</p>
-                      ) : null}
-
-                      <h2 className="mt-2 text-xl font-semibold text-finn text-pretty group-hover:underline underline-offset-4 line-clamp-2">
-                        {article.data.title || "Sin título"}
-                      </h2>
-
-                      {article.data.excerpt ? (
-                        <p className="mt-2 text-base text-codGray/90 line-clamp-3">
-                          {article.data.excerpt}
+              return (
+                <Link
+                  key={article.id}
+                  href={href}
+                  className="group bg-white rounded-xl border border-black/5 shadow-sm overflow-hidden hover:shadow-md hover:border-black/10 transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tussok/30 focus-visible:ring-offset-2 focus-visible:ring-offset-carrara"
+                >
+                  {article.data.featured_image ? (
+                    <div className="relative aspect-[16/9] bg-carrara">
+                      <PrismicNextImage
+                        field={article.data.featured_image}
+                        fill
+                        className="object-cover"
+                        sizes="(min-width: 1280px) 380px, (min-width: 768px) 45vw, 100vw"
+                        fallbackAlt=""
+                      />
+                      {categoryName ? (
+                        <p className="absolute bottom-3 left-3 text-xs font-medium text-white/90 bg-finn backdrop-blur-sm rounded-full px-3 py-1 shadow">
+                          {categoryName}
                         </p>
                       ) : null}
                     </div>
-                  </Link>
-                );
-              })}
-            </div>
-          ) : (
-            <p className="text-codGray/70">
-              Todavía no hay artículos publicados.
-            </p>
-          )}
-        </div>
+                  ) : null}
+
+                  <div className="p-5">
+                    {dateLabel ? (
+                      <p className="text-xs text-codGray/60">{dateLabel}</p>
+                    ) : null}
+
+                    <h2 className="mt-2 text-xl font-semibold text-finn text-pretty group-hover:underline underline-offset-4 line-clamp-2">
+                      {article.data.title || "Sin título"}
+                    </h2>
+
+                    {article.data.excerpt ? (
+                      <p className="mt-2 text-base text-codGray/90 line-clamp-3">
+                        {article.data.excerpt}
+                      </p>
+                    ) : null}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        ) : (
+          <p className="text-codGray/70">
+            Todavía no hay artículos publicados.
+          </p>
+        )}
       </section>
     </main>
   );

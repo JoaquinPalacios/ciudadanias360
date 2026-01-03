@@ -4,13 +4,16 @@ import dynamic from "next/dynamic";
 
 export const components = {
   cta: dynamic(() => import("./Cta")),
+  equipo: dynamic(() => import("./Equipo")),
   footer_item: dynamic(() => import("./FooterItem")),
   formulario: dynamic(() => import("./Formulario")),
   four_cards: dynamic(() => import("./FourCards")),
   hero: dynamic(() => import("./Hero")),
   intro: dynamic(() => import("./Intro")),
+  lista: dynamic(() => import("./Lista")),
   menu_item: dynamic(() => import("./MenuItem")),
   mitad_mitad: dynamic(() => import("./MitadMitad")),
+  pasos: dynamic(() => import("./Pasos")),
   preguntas_frecuentes: dynamic(() => import("./PreguntasFrecuentes")),
   services: dynamic(() => import("./Services")),
 };

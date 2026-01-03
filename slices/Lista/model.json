@@ -1,0 +1,42 @@
+{
+  "id": "lista",
+  "type": "SharedSlice",
+  "name": "Lista",
+  "description": "Lista",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "titulo": {
+          "type": "Text",
+          "config": {
+            "label": "Titulo",
+            "placeholder": ""
+          }
+        },
+        "lista": {
+          "type": "Group",
+          "config": {
+            "label": "Lista",
+            "repeat": true,
+            "fields": {
+              "texto": {
+                "type": "Text",
+                "config": {
+                  "label": "Texto",
+                  "placeholder": ""
+                }
+              }
+            }
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

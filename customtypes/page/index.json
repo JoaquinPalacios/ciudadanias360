@@ -25,6 +25,18 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "lista": {
+              "type": "SharedSlice"
+            },
+            "equipo": {
+              "type": "SharedSlice"
+            },
+            "pasos": {
+              "type": "SharedSlice"
+            },
+            "intro": {
+              "type": "SharedSlice"
+            },
             "preguntas_frecuentes": {
               "type": "SharedSlice"
             },

@@ -471,6 +471,10 @@ export type MenuDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<MenuDocumentData>, "menu", Lang>;
 
 type PageDocumentDataSlicesSlice =
+  | ListaSlice
+  | EquipoSlice
+  | PasosSlice
+  | IntroSlice
   | PreguntasFrecuentesSlice
   | FormularioSlice
   | CtaSlice
@@ -641,6 +645,105 @@ type CtaSliceVariation = CtaSliceDefault;
  * - **Documentation**: https://prismic.io/docs/slices
  */
 export type CtaSlice = prismic.SharedSlice<"cta", CtaSliceVariation>;
+
+/**
+ * Item in *Equipo → Default → Primary → Miembro del equipo*
+ */
+export interface EquipoSliceDefaultPrimaryMiembroDelEquipoItem {
+  /**
+   * Imagen field in *Equipo → Default → Primary → Miembro del equipo*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: equipo.default.primary.miembro_del_equipo[].imagen
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  imagen: prismic.ImageField<never>;
+
+  /**
+   * Nombre field in *Equipo → Default → Primary → Miembro del equipo*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: equipo.default.primary.miembro_del_equipo[].nombre
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  nombre: prismic.KeyTextField;
+
+  /**
+   * Especialidad field in *Equipo → Default → Primary → Miembro del equipo*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: equipo.default.primary.miembro_del_equipo[].especialidad
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  especialidad: prismic.KeyTextField;
+
+  /**
+   * Descripcion field in *Equipo → Default → Primary → Miembro del equipo*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: equipo.default.primary.miembro_del_equipo[].descripcion
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  descripcion: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *Equipo → Default → Primary*
+ */
+export interface EquipoSliceDefaultPrimary {
+  /**
+   * Titulo field in *Equipo → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: equipo.default.primary.titulo
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  titulo: prismic.KeyTextField;
+
+  /**
+   * Miembro del equipo field in *Equipo → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: equipo.default.primary.miembro_del_equipo[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  miembro_del_equipo: prismic.GroupField<
+    Simplify<EquipoSliceDefaultPrimaryMiembroDelEquipoItem>
+  >;
+}
+
+/**
+ * Default variation for Equipo Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type EquipoSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<EquipoSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Equipo*
+ */
+type EquipoSliceVariation = EquipoSliceDefault;
+
+/**
+ * Equipo Shared Slice
+ *
+ * - **API ID**: `equipo`
+ * - **Description**: Equipo
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type EquipoSlice = prismic.SharedSlice<"equipo", EquipoSliceVariation>;
 
 /**
  * Item in *FooterItem → Default → Primary → Links*
@@ -1116,6 +1219,73 @@ type IntroSliceVariation = IntroSliceDefault;
 export type IntroSlice = prismic.SharedSlice<"intro", IntroSliceVariation>;
 
 /**
+ * Item in *Lista → Default → Primary → Lista*
+ */
+export interface ListaSliceDefaultPrimaryListaItem {
+  /**
+   * Texto field in *Lista → Default → Primary → Lista*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: lista.default.primary.lista[].texto
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  texto: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *Lista → Default → Primary*
+ */
+export interface ListaSliceDefaultPrimary {
+  /**
+   * Titulo field in *Lista → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: lista.default.primary.titulo
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  titulo: prismic.KeyTextField;
+
+  /**
+   * Lista field in *Lista → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: lista.default.primary.lista[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  lista: prismic.GroupField<Simplify<ListaSliceDefaultPrimaryListaItem>>;
+}
+
+/**
+ * Default variation for Lista Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ListaSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ListaSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Lista*
+ */
+type ListaSliceVariation = ListaSliceDefault;
+
+/**
+ * Lista Shared Slice
+ *
+ * - **API ID**: `lista`
+ * - **Description**: Lista
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ListaSlice = prismic.SharedSlice<"lista", ListaSliceVariation>;
+
+/**
  * Item in *MenuItem → Default → Primary → Links*
  */
 export interface MenuItemSliceDefaultPrimaryLinksItem {
@@ -1325,6 +1495,83 @@ export type MitadMitadSlice = prismic.SharedSlice<
   "mitad_mitad",
   MitadMitadSliceVariation
 >;
+
+/**
+ * Item in *Pasos → Default → Primary → Pasos*
+ */
+export interface PasosSliceDefaultPrimaryPasosItem {
+  /**
+   * Paso field in *Pasos → Default → Primary → Pasos*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: pasos.default.primary.pasos[].paso
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  paso: prismic.KeyTextField;
+
+  /**
+   * Descripcion del paso field in *Pasos → Default → Primary → Pasos*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: pasos.default.primary.pasos[].descripcion_del_paso
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  descripcion_del_paso: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *Pasos → Default → Primary*
+ */
+export interface PasosSliceDefaultPrimary {
+  /**
+   * Titulo field in *Pasos → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: pasos.default.primary.titulo
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  titulo: prismic.KeyTextField;
+
+  /**
+   * Pasos field in *Pasos → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: pasos.default.primary.pasos[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  pasos: prismic.GroupField<Simplify<PasosSliceDefaultPrimaryPasosItem>>;
+}
+
+/**
+ * Default variation for Pasos Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type PasosSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<PasosSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Pasos*
+ */
+type PasosSliceVariation = PasosSliceDefault;
+
+/**
+ * Pasos Shared Slice
+ *
+ * - **API ID**: `pasos`
+ * - **Description**: Pasos
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type PasosSlice = prismic.SharedSlice<"pasos", PasosSliceVariation>;
 
 /**
  * Item in *PreguntasFrecuentes → Default → Primary → Preguntas frecuentes*
@@ -1577,6 +1824,11 @@ declare module "@prismicio/client" {
       CtaSliceDefaultPrimary,
       CtaSliceVariation,
       CtaSliceDefault,
+      EquipoSlice,
+      EquipoSliceDefaultPrimaryMiembroDelEquipoItem,
+      EquipoSliceDefaultPrimary,
+      EquipoSliceVariation,
+      EquipoSliceDefault,
       FooterItemSlice,
       FooterItemSliceDefaultPrimaryLinksItem,
       FooterItemSliceDefaultPrimary,
@@ -1603,6 +1855,11 @@ declare module "@prismicio/client" {
       IntroSliceDefaultPrimary,
       IntroSliceVariation,
       IntroSliceDefault,
+      ListaSlice,
+      ListaSliceDefaultPrimaryListaItem,
+      ListaSliceDefaultPrimary,
+      ListaSliceVariation,
+      ListaSliceDefault,
       MenuItemSlice,
       MenuItemSliceDefaultPrimaryLinksItem,
       MenuItemSliceDefaultPrimary,
@@ -1613,6 +1870,11 @@ declare module "@prismicio/client" {
       MitadMitadSliceDefaultPrimary,
       MitadMitadSliceVariation,
       MitadMitadSliceDefault,
+      PasosSlice,
+      PasosSliceDefaultPrimaryPasosItem,
+      PasosSliceDefaultPrimary,
+      PasosSliceVariation,
+      PasosSliceDefault,
       PreguntasFrecuentesSlice,
       PreguntasFrecuentesSliceDefaultPrimaryPreguntasFrecuentesItem,
       PreguntasFrecuentesSliceDefaultPrimary,
