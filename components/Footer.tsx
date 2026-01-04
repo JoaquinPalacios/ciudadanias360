@@ -69,7 +69,7 @@ export const Footer = ({ footer, detalleContacto }: FooterProps) => {
             </div>
 
             {contactItems.length ? (
-              <ul className="flex flex-col items-center gap-2 lg:items-start">
+              <ul className="flex flex-col items-center gap-2 lg:items-start w-full">
                 {contactItems.map((item, idx) => {
                   const href = normalizeHref(item.link_url || "", item.tipo);
                   if (!href) return null;

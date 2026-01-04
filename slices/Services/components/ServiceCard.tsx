@@ -7,9 +7,10 @@ import { richTextComponents } from "@/lib/prismic/richText";
 
 type Props = {
   card: Content.ServicesSliceDefaultPrimaryCardsItem;
+  anchorId?: string;
 };
 
-export const ServiceCard = ({ card }: Props) => {
+export const ServiceCard = ({ card, anchorId }: Props) => {
   const linkText =
     card.link && typeof card.link === "object" && "text" in card.link
       ? (card.link.text as string | null | undefined)
@@ -44,7 +45,10 @@ export const ServiceCard = ({ card }: Props) => {
   };
 
   return (
-    <div className="bg-white w-full backdrop-blur-md p-4 md:px-5 rounded-xl shadow flex flex-col">
+    <div
+      id={anchorId}
+      className="bg-white w-full backdrop-blur-md p-4 md:px-5 rounded-xl shadow flex flex-col scroll-mt-28"
+    >
       {card.titulo ? (
         <h3 className="text-xl lg:text-2xl font-semibold text-finn mt-2 flex items-center gap-2">
           <ServiceCardIcon icono={card.icono} />

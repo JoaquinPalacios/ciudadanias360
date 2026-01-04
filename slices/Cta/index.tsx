@@ -4,6 +4,7 @@ import { PrismicNextLink } from "@prismicio/next";
 import { SliceComponentProps } from "@prismicio/react";
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { BackgroundRings } from "@/components/BackgroundRings";
 
 /**
  * Props for `Cta`.
@@ -26,13 +27,57 @@ const getLinkText = (linkField: unknown): string | undefined => {
     : undefined;
 };
 
+const getLinkUrl = (linkField: unknown): string | undefined => {
+  if (!linkField || typeof linkField !== "object") return undefined;
+  const link = linkField as { url?: unknown };
+  return typeof link.url === "string" && link.url.trim().length
+    ? link.url.trim()
+    : undefined;
+};
+
+const normalizeWhatsappHref = (rawHref: string): string | null => {
+  const trimmed = rawHref.trim();
+  if (!trimmed) return null;
+
+  // Already a usable href.
+  if (
+    trimmed.startsWith("mailto:") ||
+    trimmed.startsWith("tel:") ||
+    trimmed.startsWith("https://") ||
+    trimmed.startsWith("http://")
+  ) {
+    return trimmed;
+  }
+
+  // Common schemeless WhatsApp URLs -> https://
+  if (
+    trimmed.startsWith("wa.me/") ||
+    trimmed.startsWith("api.whatsapp.com/") ||
+    trimmed.startsWith("web.whatsapp.com/")
+  ) {
+    return `https://${trimmed}`;
+  }
+
+  // Phone number (digits, spaces, +, etc) -> https://wa.me/<digits>
+  const digitsOnly = trimmed.replace(/[^\d]/g, "");
+  const looksLikePhoneish = digitsOnly.length >= 8;
+  if (looksLikePhoneish && /^[\d+\s().-]+$/.test(trimmed)) {
+    return `https://wa.me/${digitsOnly}`;
+  }
+
+  // Relative/internal links are not valid WhatsApp destinations.
+  return null;
+};
+
 /**
  * Component for "Cta" Slices.
  */
 const Cta: FC<CtaProps> = ({ slice }) => {
   const { titulo, texto, contacto, whatsapp } = slice.primary;
   const hasContacto = isFilledLink(contacto);
-  const hasWhatsapp = isFilledLink(whatsapp);
+  const whatsappUrl = getLinkUrl(whatsapp);
+  const whatsappHref = whatsappUrl ? normalizeWhatsappHref(whatsappUrl) : null;
+  const hasWhatsapp = Boolean(whatsappHref) || isFilledLink(whatsapp);
   const contactoText = getLinkText(contacto) || "Agendá una consulta";
   const whatsappText = getLinkText(whatsapp) || "Escribinos por WhatsApp";
 
@@ -44,13 +89,15 @@ const Cta: FC<CtaProps> = ({ slice }) => {
     >
       {/* Subtle vignette / glow overlays */}
       <div
-        className="absolute inset-0 pointer-events-none select-none"
+        className="absolute inset-0 z-0 pointer-events-none select-none"
         aria-hidden="true"
       >
         <div className="absolute inset-0 bg-[radial-gradient(800px_380px_at_50%_35%,rgba(255,255,255,0.08),transparent_60%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(900px_520px_at_50%_65%,rgba(190,158,68,0.14),transparent_65%)]" />
         <div className="absolute inset-0 bg-black/10" />
       </div>
+
+      <BackgroundRings className="z-[1]" />
 
       <div className="mx-auto flex w-full max-w-5xl flex-col items-center text-center gap-6 relative z-10">
         {titulo ? (
@@ -82,13 +129,24 @@ const Cta: FC<CtaProps> = ({ slice }) => {
                 size="lg"
                 className="font-normal w-full max-w-sm"
               >
-                <PrismicNextLink
-                  field={whatsapp}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {whatsappText} <ArrowUpRight className="size-4 ml-2" />
-                </PrismicNextLink>
+                {whatsappHref ? (
+                  <a
+                    href={whatsappHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {whatsappText} <ArrowUpRight className="size-4 ml-2" />
+                  </a>
+                ) : (
+                  <PrismicNextLink
+                    field={whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="backdrop-blur-sm"
+                  >
+                    {whatsappText} <ArrowUpRight className="size-4 ml-2" />
+                  </PrismicNextLink>
+                )}
               </Button>
             ) : null}
           </div>

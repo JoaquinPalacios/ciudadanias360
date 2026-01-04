@@ -6,6 +6,16 @@ import { PrismicRichText } from "@prismicio/react";
 import { richTextComponents } from "@/lib/prismic/richText";
 import { cn } from "@/lib/utils";
 
+function toAnchorId(input: string): string {
+  return input
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
 /**
  * Props for `MitadMitad`.
  */
@@ -16,6 +26,7 @@ export type MitadMitadProps = SliceComponentProps<Content.MitadMitadSlice>;
  */
 const MitadMitad: FC<MitadMitadProps> = ({ slice }) => {
   const { titulo, subtitulo, cards } = slice.primary;
+  const anchorCounts = new Map<string, number>();
 
   const listComponents = {
     ...richTextComponents,
@@ -39,6 +50,15 @@ const MitadMitad: FC<MitadMitadProps> = ({ slice }) => {
         {children}
       </li>
     ),
+  };
+
+  const getUniqueAnchorId = (preferred?: string, fallback?: string) => {
+    const base = toAnchorId(preferred || fallback || "");
+    if (!base) return undefined;
+
+    const seen = anchorCounts.get(base) ?? 0;
+    anchorCounts.set(base, seen + 1);
+    return seen === 0 ? base : `${base}-${seen + 1}`;
   };
 
   return (
@@ -68,6 +88,10 @@ const MitadMitad: FC<MitadMitadProps> = ({ slice }) => {
           <div className="flex flex-col gap-8 lg:gap-16">
             {cards.map((card, idx) => {
               const titleText = card.titulo || titulo || undefined;
+              const anchorId = getUniqueAnchorId(
+                card.anchor_id || undefined,
+                titleText
+              );
               const hasImage = Boolean(card.background_image?.url);
               const imageFirstDesktop = Boolean(card.imagen_primera);
 
@@ -83,7 +107,8 @@ const MitadMitad: FC<MitadMitadProps> = ({ slice }) => {
               return (
                 <article
                   key={idx}
-                  className="bg-white rounded-3xl shadow-sm ring-1 ring-black/5 overflow-hidden"
+                  id={anchorId}
+                  className="bg-white rounded-3xl shadow-sm ring-1 ring-black/5 overflow-hidden scroll-mt-28"
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-5">
                     <div

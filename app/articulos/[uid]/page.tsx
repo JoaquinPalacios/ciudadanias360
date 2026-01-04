@@ -145,18 +145,24 @@ export default async function ArticuloPage({
           ) : null}
 
           {authorName || authorAvatarImage ? (
-            <footer className="mt-14 pt-10 border-t border-black/10">
+            <footer className="mt-14 py-10 border-t border-black/10">
               <div className="flex flex-col sm:flex-row sm:items-center gap-6">
                 {authorAvatarImage ? (
                   <div className="shrink-0">
-                    <div className="relative size-16 overflow-hidden rounded-full bg-carrara border border-black/5">
-                      <PrismicNextImage
-                        field={authorAvatarImage}
-                        fallbackAlt=""
-                        fill
-                        className="object-cover"
-                        sizes="64px"
+                    <div className="relative size-16">
+                      <div
+                        aria-hidden="true"
+                        className="absolute -inset-1 rounded-full border border-tussok/18 pointer-events-none"
                       />
+                      <div className="relative size-16 overflow-hidden rounded-full bg-carrara border border-black/5">
+                        <PrismicNextImage
+                          field={authorAvatarImage}
+                          fallbackAlt=""
+                          fill
+                          className="object-cover"
+                          sizes="64px"
+                        />
+                      </div>
                     </div>
                   </div>
                 ) : null}

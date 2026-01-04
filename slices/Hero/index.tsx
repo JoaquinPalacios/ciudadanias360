@@ -89,7 +89,7 @@ const Hero: FC<HeroProps> = ({ slice }) => {
         </div>
       ) : null}
 
-      {/* Animated background pattern */}
+      {/* background pattern */}
       <div
         className="absolute inset-0 top-20 opacity-10 lg:opacity-15 z-10 pointer-events-none select-none"
         aria-hidden="true"

@@ -45,6 +45,13 @@
                   "placeholder": ""
                 }
               },
+              "anchor_id": {
+                "type": "Text",
+                "config": {
+                  "label": "Anchor ID (opcional)",
+                  "placeholder": "ej: visas"
+                }
+              },
               "texto": {
                 "type": "Text",
                 "config": {

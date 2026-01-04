@@ -28,8 +28,8 @@ type PickContentRelationshipFieldData<
       TSubRelationship["customtypes"],
       TLang
     >;
-  } & // Group
-  {
+  } & {
+    // Group
     [TGroup in Extract<
       TRelationship["fields"][number],
       | prismic.CustomTypeModelFetchGroupLevel1
@@ -41,8 +41,8 @@ type PickContentRelationshipFieldData<
           PickContentRelationshipFieldData<TGroup, TGroupData, TLang>
         >
       : never;
-  } & // Other fields
-  {
+  } & {
+    // Other fields
     [TFieldKey in Extract<
       TRelationship["fields"][number],
       string
@@ -1462,6 +1462,16 @@ export interface MitadMitadSliceDefaultPrimaryCardsItem {
   titulo: prismic.KeyTextField;
 
   /**
+   * Anchor ID (opcional) field in *MitadMitad → Default → Primary → Cards*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: mitad_mitad.default.primary.cards[].anchor_id
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  anchor_id: prismic.KeyTextField;
+
+  /**
    * Intro field in *MitadMitad → Default → Primary → Cards*
    *
    * - **Field Type**: Text
@@ -1773,6 +1783,16 @@ export interface ServicesSliceDefaultPrimaryCardsItem {
   titulo: prismic.KeyTextField;
 
   /**
+   * Anchor ID (opcional) field in *Services → Default → Primary → Cards*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: services.default.primary.cards[].anchor_id
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  anchor_id: prismic.KeyTextField;
+
+  /**
    * Texto field in *Services → Default → Primary → Cards*
    *
    * - **Field Type**: Text
@@ -1862,14 +1882,14 @@ declare module "@prismicio/client" {
   interface CreateClient {
     (
       repositoryNameOrEndpoint: string,
-      options?: prismic.ClientConfig,
+      options?: prismic.ClientConfig
     ): prismic.Client<AllDocumentTypes>;
   }
 
   interface CreateWriteClient {
     (
       repositoryNameOrEndpoint: string,
-      options: prismic.WriteClientConfig,
+      options: prismic.WriteClientConfig
     ): prismic.WriteClient<AllDocumentTypes>;
   }
 

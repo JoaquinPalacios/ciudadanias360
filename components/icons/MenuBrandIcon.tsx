@@ -12,7 +12,6 @@ type MenuBrandIconProps = React.SVGProps<SVGSVGElement> & {
 export function MenuBrandIcon({
   className,
   strokeWidth = 2.25,
-  accentClassName = "text-tussok",
   ...props
 }: MenuBrandIconProps) {
   return (
