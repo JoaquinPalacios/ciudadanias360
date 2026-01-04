@@ -28,8 +28,8 @@ type PickContentRelationshipFieldData<
       TSubRelationship["customtypes"],
       TLang
     >;
-  } & {
-    // Group
+  } & // Group
+  {
     [TGroup in Extract<
       TRelationship["fields"][number],
       | prismic.CustomTypeModelFetchGroupLevel1
@@ -41,8 +41,8 @@ type PickContentRelationshipFieldData<
           PickContentRelationshipFieldData<TGroup, TGroupData, TLang>
         >
       : never;
-  } & {
-    // Other fields
+  } & // Other fields
+  {
     [TFieldKey in Extract<
       TRelationship["fields"][number],
       string
@@ -445,6 +445,7 @@ export type FooterDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<FooterDocumentData>, "footer", Lang>;
 
 type HomeDocumentDataSlicesSlice =
+  | ArticulosRelacionadosSlice
   | CtaSlice
   | ServicesSlice
   | IntroSlice
@@ -540,6 +541,7 @@ export type MenuDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<MenuDocumentData>, "menu", Lang>;
 
 type PageDocumentDataSlicesSlice =
+  | ArticulosRelacionadosSlice
   | ListaSlice
   | EquipoSlice
   | PasosSlice
@@ -631,6 +633,61 @@ export type AllDocumentTypes =
   | HomeDocument
   | MenuDocument
   | PageDocument;
+
+/**
+ * Primary content in *ArticulosRelacionados → Default → Primary*
+ */
+export interface ArticulosRelacionadosSliceDefaultPrimary {
+  /**
+   * Titulo field in *ArticulosRelacionados → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: articulos_relacionados.default.primary.titulo
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  titulo: prismic.KeyTextField;
+
+  /**
+   * Link field in *ArticulosRelacionados → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: articulos_relacionados.default.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Default variation for ArticulosRelacionados Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ArticulosRelacionadosSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ArticulosRelacionadosSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *ArticulosRelacionados*
+ */
+type ArticulosRelacionadosSliceVariation = ArticulosRelacionadosSliceDefault;
+
+/**
+ * ArticulosRelacionados Shared Slice
+ *
+ * - **API ID**: `articulos_relacionados`
+ * - **Description**: ArticulosRelacionados
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ArticulosRelacionadosSlice = prismic.SharedSlice<
+  "articulos_relacionados",
+  ArticulosRelacionadosSliceVariation
+>;
 
 /**
  * Primary content in *Cta → Default → Primary*
@@ -1465,7 +1522,7 @@ export interface MitadMitadSliceDefaultPrimaryCardsItem {
    * Anchor ID (opcional) field in *MitadMitad → Default → Primary → Cards*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: *None*
+   * - **Placeholder**: ej: requisitos-documentos
    * - **API ID Path**: mitad_mitad.default.primary.cards[].anchor_id
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
@@ -1786,7 +1843,7 @@ export interface ServicesSliceDefaultPrimaryCardsItem {
    * Anchor ID (opcional) field in *Services → Default → Primary → Cards*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: *None*
+   * - **Placeholder**: ej: visas
    * - **API ID Path**: services.default.primary.cards[].anchor_id
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
@@ -1882,14 +1939,14 @@ declare module "@prismicio/client" {
   interface CreateClient {
     (
       repositoryNameOrEndpoint: string,
-      options?: prismic.ClientConfig
+      options?: prismic.ClientConfig,
     ): prismic.Client<AllDocumentTypes>;
   }
 
   interface CreateWriteClient {
     (
       repositoryNameOrEndpoint: string,
-      options: prismic.WriteClientConfig
+      options: prismic.WriteClientConfig,
     ): prismic.WriteClient<AllDocumentTypes>;
   }
 
@@ -1924,6 +1981,10 @@ declare module "@prismicio/client" {
       PageDocumentData,
       PageDocumentDataSlicesSlice,
       AllDocumentTypes,
+      ArticulosRelacionadosSlice,
+      ArticulosRelacionadosSliceDefaultPrimary,
+      ArticulosRelacionadosSliceVariation,
+      ArticulosRelacionadosSliceDefault,
       CtaSlice,
       CtaSliceDefaultPrimary,
       CtaSliceVariation,

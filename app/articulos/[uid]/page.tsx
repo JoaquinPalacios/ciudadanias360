@@ -78,6 +78,15 @@ export default async function ArticuloPage({
     .getSingle("article_index")
     .catch(() => null);
 
+  const home = await client.getSingle("home").catch(() => null);
+
+  const relatedSlices =
+    home?.data.slices?.filter(
+      (slice) =>
+        (slice as unknown as { slice_type: string }).slice_type ===
+        "articulos_relacionados"
+    ) ?? [];
+
   const ctaSlices =
     articleIndex?.data.slices?.filter((slice) => slice.slice_type === "cta") ??
     [];
@@ -183,8 +192,20 @@ export default async function ArticuloPage({
         </div>
       </div>
 
+      {relatedSlices.length ? (
+        <SliceZone
+          slices={relatedSlices}
+          components={components}
+          context={{ currentArticleUid: uid }}
+        />
+      ) : null}
+
       {ctaSlices.length ? (
-        <SliceZone slices={ctaSlices} components={components} />
+        <SliceZone
+          slices={ctaSlices}
+          components={components}
+          context={{ currentArticleUid: uid }}
+        />
       ) : null}
     </main>
   );

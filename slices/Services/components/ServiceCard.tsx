@@ -47,8 +47,12 @@ export const ServiceCard = ({ card, anchorId }: Props) => {
   return (
     <div
       id={anchorId}
-      className="bg-white w-full backdrop-blur-md p-4 md:px-5 rounded-xl shadow flex flex-col scroll-mt-28"
+      className="relative overflow-hidden bg-white w-full backdrop-blur-md p-4 md:px-5 rounded-xl shadow flex flex-col scroll-mt-28"
     >
+      <div
+        className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-tussok/70 via-laser/35 to-transparent"
+        aria-hidden="true"
+      />
       {card.titulo ? (
         <h3 className="text-xl lg:text-2xl font-semibold text-finn mt-2 flex items-center gap-2">
           <ServiceCardIcon icono={card.icono} />

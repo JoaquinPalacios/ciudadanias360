@@ -1,0 +1,23 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"titulo": {
+				"__TYPE__": "FieldContent",
+				"value": "job",
+				"type": "Text"
+			},
+			"link": {
+				"__TYPE__": "LinkContent",
+				"key": "1fb89c43-900d-4e8a-b2ab-19f26f7dfee0",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "https://slicemachine.dev",
+					"text": "discover"
+				}
+			}
+		},
+		"items": []
+	}
+]

@@ -38,11 +38,12 @@ const FourCards: FC<FourCardsProps> = ({ slice }) => {
       data-slice-variation={slice.variation}
       className="px-4 pb-16 pt-12 lg:px-6 lg:py-20 relative overflow-hidden bg-carrara"
     >
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-7 lg:gap-16 relative z-20">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-7 lg:gap-14 relative z-20">
         {titulo ? (
-          <h2 className="text-finn text-center max-w-4xl mx-auto leading-none text-pretty">
-            {titulo}
-          </h2>
+          <div className="flex flex-col gap-3">
+            <h2 className="text-finn leading-none text-pretty">{titulo}</h2>
+            <div className="h-px w-full bg-gradient-to-r from-tussok/40 via-black/10 to-transparent" />
+          </div>
         ) : null}
 
         {cards?.length ? (
@@ -88,13 +89,17 @@ const FourCards: FC<FourCardsProps> = ({ slice }) => {
               );
 
               const shellClassName =
-                "bg-white rounded-xl border border-black/5 shadow-sm p-4 sm:p-5 xl:p-6 flex flex-col h-full transition-shadow " +
+                "relative overflow-hidden bg-white rounded-xl border border-black/5 shadow-sm p-4 sm:p-5 xl:p-6 flex flex-col h-full transition-shadow " +
                 "hover:shadow-md hover:border-black/10 focus-visible:outline-none focus-visible:ring-2 " +
                 "focus-visible:ring-tussok/30 focus-visible:ring-offset-2 focus-visible:ring-offset-carrara";
 
               if (!hasLink) {
                 return (
                   <div key={idx} className={shellClassName}>
+                    <div
+                      className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-tussok/70 via-laser/35 to-transparent"
+                      aria-hidden="true"
+                    />
                     {CardInner}
                   </div>
                 );
@@ -106,6 +111,10 @@ const FourCards: FC<FourCardsProps> = ({ slice }) => {
                   field={card.link}
                   className={`group ${shellClassName}`}
                 >
+                  <div
+                    className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-tussok/70 via-laser/35 to-transparent"
+                    aria-hidden="true"
+                  />
                   {CardInner}
                 </PrismicNextLink>
               );

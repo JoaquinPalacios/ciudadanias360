@@ -9,16 +9,22 @@ const Accordion = AccordionPrimitive.Root;
 const AccordionItem = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
->(({ className, ...props }, ref) => (
+>(({ className, children, ...props }, ref) => (
   <AccordionPrimitive.Item
     ref={ref}
     className={cn(
-      "rounded-xl border border-black/5 bg-white/70 shadow-sm",
+      "relative overflow-hidden rounded-xl border border-black/5 bg-white/70 shadow-sm",
       "focus-within:ring-2 focus-within:ring-tussok/30 focus-within:ring-offset-2 focus-within:ring-offset-carrara",
       className
     )}
     {...props}
-  />
+  >
+    <div
+      className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-tussok/70 via-laser/35 to-transparent"
+      aria-hidden="true"
+    />
+    {children}
+  </AccordionPrimitive.Item>
 ));
 AccordionItem.displayName = "AccordionItem";
 

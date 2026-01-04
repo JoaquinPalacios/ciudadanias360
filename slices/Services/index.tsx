@@ -20,11 +20,12 @@ const Services: FC<ServicesProps> = ({ slice }) => {
       data-slice-variation={slice.variation}
       className="px-4 pb-16 pt-12 lg:px-6 lg:py-20 relative overflow-hidden bg-carrara"
     >
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-7 lg:gap-16 relative z-20">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-7 lg:gap-14 relative z-20">
         {titulo ? (
-          <h2 className="text-finn text-center max-w-4xl mx-auto leading-none text-pretty">
-            {titulo}
-          </h2>
+          <div className="flex flex-col gap-3">
+            <h2 className="text-finn leading-none text-pretty">{titulo}</h2>
+            <div className="h-px w-full bg-gradient-to-r from-tussok/40 via-black/10 to-transparent" />
+          </div>
         ) : null}
 
         {cards?.length ? <ServiceCards cards={cards} /> : null}
