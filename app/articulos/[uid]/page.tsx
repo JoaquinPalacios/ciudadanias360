@@ -97,7 +97,7 @@ export default async function ArticuloPage({
       : undefined;
 
   return (
-    <main>
+    <main className="bg-carrara">
       <div className="px-4 py-10 lg:px-6 lg:py-14">
         <div className="mx-auto w-full max-w-5xl px-4 lg:px-6">
           <Breadcrumbs

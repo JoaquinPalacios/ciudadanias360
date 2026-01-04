@@ -31,7 +31,7 @@ export default async function Page() {
   const home = await client.getSingle("home");
 
   return (
-    <main>
+    <main className="bg-carrara">
       <SliceZone slices={home.data.slices} components={components} />
     </main>
   );

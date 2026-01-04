@@ -28,16 +28,16 @@ const PreguntasFrecuentes: FC<PreguntasFrecuentesProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="px-4 pb-12 pt-8 lg:px-6 lg:py-16 relative overflow-hidden bg-carrara"
+      className="relative overflow-hidden bg-carrara"
     >
-      <div className="mx-auto w-full max-w-7xl relative z-20">
+      <div className="mx-auto w-full max-w-8xl relative z-20 px-4 pb-12 pt-8 lg:px-6 lg:py-16">
         <div className="flex flex-col gap-4 lg:gap-6">
           {titulo ? (
             <h2 className="text-finn leading-none text-pretty">{titulo}</h2>
           ) : null}
 
           {texto ? (
-            <p className="text-base lg:text-lg text-codGray/85 leading-relaxed text-pretty mb-6">
+            <p className="text-base lg:text-lg text-codGray/85 leading-relaxed text-pretty mb-6 max-w-prose">
               {texto}
             </p>
           ) : null}
@@ -46,7 +46,7 @@ const PreguntasFrecuentes: FC<PreguntasFrecuentesProps> = ({ slice }) => {
             <Accordion
               type="single"
               collapsible
-              className="flex flex-col gap-4"
+              className="flex flex-col gap-4 max-w-3xl"
             >
               {items.map((item, idx) => {
                 const pregunta = item.pregunta?.trim() || `Pregunta ${idx + 1}`;

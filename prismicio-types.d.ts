@@ -349,14 +349,24 @@ export interface DetallecontactoDocumentDataDetalleDeContactoItem {
   tipo: prismic.SelectField<"Email" | "Whatsapp">;
 
   /**
-   * Link field in *DetalleContacto → Detalle de contacto*
+   * Link label field in *DetalleContacto → Detalle de contacto*
    *
-   * - **Field Type**: Link
+   * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: detallecontacto.detalle_de_contacto[].link
-   * - **Documentation**: https://prismic.io/docs/fields/link
+   * - **API ID Path**: detallecontacto.detalle_de_contacto[].link_label
+   * - **Documentation**: https://prismic.io/docs/fields/text
    */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+  link_label: prismic.KeyTextField;
+
+  /**
+   * Link URL field in *DetalleContacto → Detalle de contacto*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: detallecontacto.detalle_de_contacto[].link_url
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  link_url: prismic.KeyTextField;
 }
 
 /**
@@ -1071,7 +1081,7 @@ export interface HeroSliceDefaultPrimary {
   mostrar_boton_contacto: prismic.BooleanField;
 
   /**
-   * Mostrar boton calendario field in *Hero → Default → Primary*
+   * Mostrar boton WhatsApp field in *Hero → Default → Primary*
    *
    * - **Field Type**: Boolean
    * - **Placeholder**: *None*

@@ -1,22 +1,56 @@
 import { Logo } from "./Logo";
 import type { Content } from "@prismicio/client";
-import { isFilled } from "@prismicio/client";
-import { PrismicNextLink } from "@prismicio/next";
 import { SliceZone } from "@prismicio/react";
 import { components } from "@/slices";
-import { linkResolver } from "@/lib/prismic/linkResolver";
 
 type FooterProps = {
   footer: Content.FooterDocument;
   detalleContacto?: Content.DetallecontactoDocument | null;
 };
 
-const getLinkText = (linkField: unknown): string | undefined => {
-  if (!linkField || typeof linkField !== "object") return undefined;
-  const link = linkField as { text?: unknown };
-  return typeof link.text === "string" && link.text.trim().length
-    ? link.text
-    : undefined;
+const normalizeHref = (
+  rawHref: string,
+  tipo?: string | null
+): string | null => {
+  const trimmed = rawHref.trim();
+  if (!trimmed) return null;
+
+  // If the user already provided a fully-qualified href, trust it.
+  if (
+    trimmed.startsWith("mailto:") ||
+    trimmed.startsWith("tel:") ||
+    trimmed.startsWith("https://") ||
+    trimmed.startsWith("http://")
+  ) {
+    return trimmed;
+  }
+
+  // Plain email address -> mailto:
+  const looksLikeEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
+  if (looksLikeEmail) return `mailto:${trimmed}`;
+
+  // Common schemeless URLs -> https://
+  if (
+    trimmed.startsWith("wa.me/") ||
+    trimmed.startsWith("api.whatsapp.com/") ||
+    trimmed.startsWith("web.whatsapp.com/") ||
+    trimmed.startsWith("www.")
+  ) {
+    return `https://${trimmed}`;
+  }
+
+  // Whatsapp phone number (digits, spaces, +, etc) -> https://wa.me/<digits>
+  const digitsOnly = trimmed.replace(/[^\d]/g, "");
+  const looksLikePhoneish = digitsOnly.length >= 8;
+  if (
+    tipo === "Whatsapp" &&
+    looksLikePhoneish &&
+    /^[\d+\s().-]+$/.test(trimmed)
+  ) {
+    return `https://wa.me/${digitsOnly}`;
+  }
+
+  return null;
 };
 
 export const Footer = ({ footer, detalleContacto }: FooterProps) => {
@@ -37,18 +71,22 @@ export const Footer = ({ footer, detalleContacto }: FooterProps) => {
             {contactItems.length ? (
               <ul className="flex flex-col items-center gap-2 lg:items-start">
                 {contactItems.map((item, idx) => {
-                  if (!isFilled.link(item.link)) return null;
-                  const text = getLinkText(item.link) || item.tipo || "Abrir";
+                  const href = normalizeHref(item.link_url || "", item.tipo);
+                  if (!href) return null;
+
+                  const text =
+                    item.link_label?.trim?.() || item.tipo || "Abrir";
 
                   return (
                     <li key={idx}>
-                      <PrismicNextLink
-                        field={item.link}
-                        linkResolver={linkResolver}
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="text-white/80 hover:text-white transition-colors"
                       >
                         {text}
-                      </PrismicNextLink>
+                      </a>
                     </li>
                   );
                 })}

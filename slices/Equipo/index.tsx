@@ -31,9 +31,9 @@ const Equipo: FC<EquipoProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="px-4 pb-12 pt-8 lg:px-6 lg:py-16 relative overflow-hidden bg-carrara"
+      className="relative overflow-hidden bg-carrara"
     >
-      <div className="mx-auto w-full max-w-8xl relative z-10">
+      <div className="mx-auto w-full max-w-8xl relative z-10 px-4 pb-12 pt-8 lg:px-6 lg:py-16">
         <div className="flex flex-col gap-6 lg:gap-10">
           {titulo ? (
             <div className="flex flex-col gap-3">

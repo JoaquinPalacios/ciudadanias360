@@ -63,7 +63,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const page = await client.getByUID("page", uid).catch(() => notFound());
 
   return (
-    <main>
+    <main className="bg-carrara">
       <SliceZone slices={page.data.slices} components={components} />
     </main>
   );

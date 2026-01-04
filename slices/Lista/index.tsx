@@ -20,13 +20,13 @@ const Lista: FC<ListaProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="px-4 py-12 lg:px-6 lg:py-16 relative overflow-hidden bg-carrara"
+      className="relative overflow-hidden bg-carrara"
     >
       <div className="absolute inset-0 pointer-events-none opacity-60">
         <div className="absolute bottom-0 -right-24 h-72 w-72 rounded-full bg-tussok/15 blur-3xl" />
       </div>
 
-      <div className="mx-auto w-full max-w-8xl relative z-10">
+      <div className="mx-auto w-full max-w-8xl px-4 py-12 lg:px-6 lg:py-16  relative z-10">
         <div className="flex flex-col gap-6 lg:gap-10">
           {titulo ? (
             <div className="flex flex-col gap-3">

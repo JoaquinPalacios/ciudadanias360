@@ -20,15 +20,18 @@
                 "options": ["Email", "Whatsapp"]
               }
             },
-            "link": {
-              "type": "Link",
+            "link_label": {
+              "type": "Text",
               "config": {
-                "label": "Link",
-                "placeholder": "",
-                "select": null,
-                "allowTargetBlank": true,
-                "allowText": true,
-                "repeat": false
+                "label": "Link label",
+                "placeholder": ""
+              }
+            },
+            "link_url": {
+              "type": "Text",
+              "config": {
+                "label": "Link URL",
+                "placeholder": ""
               }
             }
           }

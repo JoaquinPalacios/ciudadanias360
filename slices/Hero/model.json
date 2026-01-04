@@ -38,7 +38,7 @@
         "mostrar_boton_calendario": {
           "type": "Boolean",
           "config": {
-            "label": "Mostrar boton calendario",
+            "label": "Mostrar boton WhatsApp",
             "placeholder_false": "false",
             "placeholder_true": "true",
             "default_value": false
