@@ -60,9 +60,11 @@ const ArticulosRelacionados = async ({
         {link ? (
           <PrismicNextLink
             field={link}
-            className="inline-flex items-center gap-2 text-tussok hover:underline underline-offset-4"
+            className="group inline-flex items-center gap-2 text-tussok"
           >
-            {linkText || "Ver todos"}
+            <span className="link-underline--group">
+              {linkText || "Ver todos"}
+            </span>
             <ArrowRight className="size-4 mt-0.5" aria-hidden="true" />
           </PrismicNextLink>
         ) : null}
@@ -82,10 +84,19 @@ const ArticulosRelacionados = async ({
               <Link
                 key={article.id}
                 href={href}
-                className="group bg-white rounded-xl border border-black/5 shadow-sm overflow-hidden hover:shadow-md hover:border-black/10 transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tussok/30 focus-visible:ring-offset-2 focus-visible:ring-offset-carrara"
+                className="group relative block h-full overflow-hidden rounded-2xl border border-black/5 bg-white/70 shadow-xs transition-all duration-300 hover:shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tussok/30 focus-visible:ring-offset-2 focus-visible:ring-offset-carrara"
               >
+                <div
+                  className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-tussok/70 via-laser/35 to-transparent"
+                  aria-hidden="true"
+                />
+                <div
+                  className="absolute -right-10 -bottom-10 h-32 w-32 rounded-full bg-laser/15 blur-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  aria-hidden="true"
+                />
+
                 {article.data.featured_image ? (
-                  <div className="relative aspect-[16/9] bg-carrara">
+                  <div className="relative aspect-video bg-carrara">
                     <PrismicNextImage
                       field={article.data.featured_image}
                       fill
@@ -102,7 +113,7 @@ const ArticulosRelacionados = async ({
                 ) : null}
 
                 <div className="p-5">
-                  <h3 className="text-xl font-semibold text-finn text-pretty group-hover:underline underline-offset-4 line-clamp-2">
+                  <h3 className="text-xl font-semibold text-finn text-pretty line-clamp-2">
                     {article.data.title || "Sin título"}
                   </h3>
 

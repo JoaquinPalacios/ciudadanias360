@@ -83,7 +83,7 @@ export const Footer = ({ footer, detalleContacto }: FooterProps) => {
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-white/80 hover:text-white transition-colors"
+                        className="link-underline text-white/80 hover:text-white transition-colors"
                       >
                         {text}
                       </a>

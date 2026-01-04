@@ -51,7 +51,7 @@ export const Breadcrumbs = ({
               {showLink ? (
                 <Link
                   href={item.href as string}
-                  className="hover:underline underline-offset-4"
+                  className="link-underline"
                   title={isTruncated ? item.label : undefined}
                 >
                   {displayLabel}

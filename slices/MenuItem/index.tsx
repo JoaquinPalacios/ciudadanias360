@@ -36,9 +36,9 @@ const MenuItem: FC<MenuItemProps> = ({ slice }) => {
             key={idx}
             field={item.link}
             linkResolver={linkResolver}
-            className="w-full lg:w-auto text-tussok hover:text-tussok transition-colors text-xl lg:text-lg font-medium tracking-wide py-2"
+            className="group w-full lg:w-auto text-tussok hover:text-tussok transition-colors text-xl lg:text-lg font-medium tracking-wide py-2"
           >
-            {text}
+            <span className="link-underline--group">{text}</span>
           </PrismicNextLink>
         );
       })}

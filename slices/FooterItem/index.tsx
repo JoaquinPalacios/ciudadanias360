@@ -46,7 +46,7 @@ const FooterItem: FC<FooterItemProps> = ({ slice }) => {
                 <PrismicNextLink
                   field={item.link}
                   linkResolver={linkResolver}
-                  className="text-white/80 hover:text-white transition-colors"
+                  className="link-underline text-white/80 hover:text-white transition-colors"
                 >
                   {text}
                 </PrismicNextLink>

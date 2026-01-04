@@ -77,8 +77,10 @@ const FourCards: FC<FourCardsProps> = ({ slice }) => {
                   ) : null}
 
                   {hasLink ? (
-                    <span className="mt-auto inline-flex items-center gap-2 text-tussok hover:underline group-focus-visible:underline underline-offset-4">
-                      {linkText || "Más información"}
+                    <span className="mt-auto inline-flex items-center gap-2 text-tussok">
+                      <span className="link-underline--group">
+                        {linkText || "Más información"}
+                      </span>
                       <ArrowRight
                         className="size-4 mt-0.5"
                         aria-hidden="true"
