@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { PrismicRichText } from "@prismicio/react";
+import { PrismicRichText, SliceZone } from "@prismicio/react";
 import { PrismicNextImage } from "@prismicio/next";
 
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { richTextComponents } from "@/lib/prismic/richText";
 import { createClient } from "@/prismicio";
+import { components } from "@/slices";
 import { formatEsArDate } from "@/lib/articles/articleFormat";
 import {
   getAuthorAvatarImage,
@@ -73,6 +74,14 @@ export default async function ArticuloPage({
     })
     .catch(() => notFound());
 
+  const articleIndex = await client
+    .getSingle("article_index")
+    .catch(() => null);
+
+  const ctaSlices =
+    articleIndex?.data.slices?.filter((slice) => slice.slice_type === "cta") ??
+    [];
+
   const title =
     article.data.title && typeof article.data.title === "string"
       ? article.data.title
@@ -88,83 +97,89 @@ export default async function ArticuloPage({
       : undefined;
 
   return (
-    <main className="px-4 py-10 lg:px-6 lg:py-14">
-      <div className="mx-auto w-full max-w-5xl px-4 lg:px-6">
-        <Breadcrumbs
-          items={[
-            { label: "Inicio", href: "/" },
-            { label: "Artículos", href: "/articulos" },
-            { label: title },
-          ]}
-          className="mb-6"
-        />
+    <main>
+      <div className="px-4 py-10 lg:px-6 lg:py-14">
+        <div className="mx-auto w-full max-w-5xl px-4 lg:px-6">
+          <Breadcrumbs
+            items={[
+              { label: "Inicio", href: "/" },
+              { label: "Artículos", href: "/articulos" },
+              { label: title },
+            ]}
+            className="mb-6"
+          />
 
-        <header className="mb-8">
-          {categoryName ? (
-            <p className="text-sm mb-2 font-medium text-tussok">
-              {categoryName}
-            </p>
-          ) : null}
-          <h1 className="text-finn leading-none text-pretty">{title}</h1>
+          <header className="mb-8">
+            {categoryName ? (
+              <p className="text-sm mb-2 font-medium text-tussok">
+                {categoryName}
+              </p>
+            ) : null}
+            <h1 className="text-finn leading-none text-pretty">{title}</h1>
 
-          {dateLabel ? (
-            <p className="mt-3 text-sm text-codGray/70">{dateLabel}</p>
-          ) : null}
+            {dateLabel ? (
+              <p className="mt-3 text-sm text-codGray/70">{dateLabel}</p>
+            ) : null}
 
-          {article.data.featured_image ? (
-            <div className="relative mt-6 aspect-[16/9] overflow-hidden rounded-xl bg-carrara border border-black/5">
-              <PrismicNextImage
-                field={article.data.featured_image}
-                fill
-                className="object-cover"
-                sizes="(min-width: 1024px) 768px, 100vw"
-                fallbackAlt=""
-                loading="eager"
-              />
-            </div>
-          ) : null}
-        </header>
-
-        {article.data.body ? (
-          <article className="prose prose-neutral max-w-none">
-            <PrismicRichText
-              field={article.data.body}
-              components={richTextComponents}
-            />
-          </article>
-        ) : null}
-
-        {authorName || authorAvatarImage ? (
-          <footer className="mt-14 pt-10 border-t border-black/10">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-6">
-              {authorAvatarImage ? (
-                <div className="shrink-0">
-                  <div className="relative size-16 overflow-hidden rounded-full bg-carrara border border-black/5">
-                    <PrismicNextImage
-                      field={authorAvatarImage}
-                      fallbackAlt=""
-                      fill
-                      className="object-cover"
-                      sizes="64px"
-                    />
-                  </div>
-                </div>
-              ) : null}
-
-              <div>
-                {authorName ? (
-                  <p className="text-finn md:text-lg font-semibold leading-none text-pretty mb-1">
-                    {authorName}
-                  </p>
-                ) : null}
-                <p className="text-tussok text-pretty">
-                  Especialista en derecho internacional y procesos migratorios
-                </p>
+            {article.data.featured_image ? (
+              <div className="relative mt-6 aspect-[16/9] overflow-hidden rounded-xl bg-carrara border border-black/5">
+                <PrismicNextImage
+                  field={article.data.featured_image}
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 768px, 100vw"
+                  fallbackAlt=""
+                  loading="eager"
+                />
               </div>
-            </div>
-          </footer>
-        ) : null}
+            ) : null}
+          </header>
+
+          {article.data.body ? (
+            <article className="prose prose-neutral max-w-none">
+              <PrismicRichText
+                field={article.data.body}
+                components={richTextComponents}
+              />
+            </article>
+          ) : null}
+
+          {authorName || authorAvatarImage ? (
+            <footer className="mt-14 pt-10 border-t border-black/10">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-6">
+                {authorAvatarImage ? (
+                  <div className="shrink-0">
+                    <div className="relative size-16 overflow-hidden rounded-full bg-carrara border border-black/5">
+                      <PrismicNextImage
+                        field={authorAvatarImage}
+                        fallbackAlt=""
+                        fill
+                        className="object-cover"
+                        sizes="64px"
+                      />
+                    </div>
+                  </div>
+                ) : null}
+
+                <div>
+                  {authorName ? (
+                    <p className="text-finn md:text-lg font-semibold leading-none text-pretty mb-1">
+                      {authorName}
+                    </p>
+                  ) : null}
+                  <p className="text-tussok text-pretty">
+                    Especialista en derecho internacional y procesos migratorios
+                  </p>
+                </div>
+              </div>
+            </footer>
+          ) : null}
+        </div>
       </div>
+
+      {ctaSlices.length ? (
+        <SliceZone slices={ctaSlices} components={components} />
+      ) : null}
     </main>
   );
 }

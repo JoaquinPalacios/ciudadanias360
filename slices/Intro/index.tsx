@@ -3,6 +3,7 @@ import { Content } from "@prismicio/client";
 import { PrismicNextImage } from "@prismicio/next";
 import { SliceComponentProps } from "@prismicio/react";
 import { CircleCheckBig } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 /**
  * Props for `Intro`.
@@ -13,7 +14,8 @@ export type IntroProps = SliceComponentProps<Content.IntroSlice>;
  * Component for "Intro" Slices.
  */
 const Intro: FC<IntroProps> = ({ slice }) => {
-  const { titulo, texto, enumeracion, imagen } = slice.primary;
+  const { titulo, texto, enumeracion, imagen, alinear_al_centro } =
+    slice.primary;
   const hasEnumeracion = Boolean(enumeracion?.length);
   const hasImagen = Boolean(imagen?.url);
   const hasSideBySide = hasEnumeracion || hasImagen;
@@ -22,21 +24,40 @@ const Intro: FC<IntroProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="px-4 py-12 lg:px-6 lg:py-20 relative overflow-hidden bg-carrara"
+      className={cn(
+        "px-4 py-12 lg:px-6 relative bg-carrara max-w-8xl mx-auto",
+        hasSideBySide ? "lg:py-20" : "lg:pt-20"
+      )}
     >
       <div className="absolute inset-0 pointer-events-none opacity-60">
         <div className="absolute top-0 -left-24 h-72 w-72 rounded-full bg-laser/15 blur-3xl" />
       </div>
 
-      <div className="mx-auto flex w-full max-w-8xl flex-col gap-6 relative z-20">
+      <div
+        className={cn(
+          "mx-auto flex w-full flex-col gap-6 relative z-20",
+          alinear_al_centro ? "items-center" : "items-start"
+        )}
+      >
         {titulo ? (
-          <h2 className="text-finn text-center max-w-4xl mx-auto leading-none text-pretty">
+          <h2
+            className={cn(
+              "text-finn text-center max-w-4xl leading-none text-pretty",
+              alinear_al_centro ? "mx-auto" : "text-left w-full"
+            )}
+          >
             {titulo}
           </h2>
         ) : null}
 
         {texto ? (
-          <p className="max-w-4xl mx-auto text-mineShaft text-center text-lg lg:text-2xl mb-6 lg:mb-10 text-balance md:text-pretty">
+          <p
+            className={cn(
+              "max-w-4xl text-mineShaft text-center text-lg lg:text-2xl text-balance md:text-pretty",
+              alinear_al_centro ? "mx-auto" : "text-left",
+              hasSideBySide ? "mb-6 lg:mb-10" : ""
+            )}
+          >
             {texto}
           </p>
         ) : null}

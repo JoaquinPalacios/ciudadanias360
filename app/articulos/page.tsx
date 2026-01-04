@@ -49,10 +49,14 @@ export default async function ArticulosIndexPage() {
     })
     .catch(() => []);
 
+  const slices = articleIndex?.data.slices ?? [];
+  const topSlices = slices.filter((slice) => slice.slice_type !== "cta");
+  const bottomCtaSlices = slices.filter((slice) => slice.slice_type === "cta");
+
   return (
-    <main>
-      {articleIndex?.data.slices?.length ? (
-        <SliceZone slices={articleIndex.data.slices} components={components} />
+    <main className="bg-carrara">
+      {topSlices.length ? (
+        <SliceZone slices={topSlices} components={components} />
       ) : null}
 
       <section
@@ -120,6 +124,10 @@ export default async function ArticulosIndexPage() {
           </p>
         )}
       </section>
+
+      {bottomCtaSlices.length ? (
+        <SliceZone slices={bottomCtaSlices} components={components} />
+      ) : null}
     </main>
   );
 }

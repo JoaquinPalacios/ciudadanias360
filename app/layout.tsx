@@ -35,13 +35,16 @@ export default async function RootLayout({
   const client = createClient();
   const menu = await client.getSingle("menu");
   const footer = await client.getSingle("footer");
+  const detalleContacto = await client
+    .getSingle("detallecontacto")
+    .catch(() => null);
 
   return (
     <html lang="en">
       <body className={lato.className}>
         <Navbar menu={menu} />
         {children}
-        <Footer footer={footer} />
+        <Footer footer={footer} detalleContacto={detalleContacto} />
       </body>
     </html>
   );

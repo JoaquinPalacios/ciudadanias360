@@ -26,6 +26,15 @@
             "placeholder": ""
           }
         },
+        "alinear_al_centro": {
+          "type": "Boolean",
+          "config": {
+            "label": "Alinear al centro",
+            "placeholder_false": "false",
+            "placeholder_true": "true",
+            "default_value": true
+          }
+        },
         "enumeracion": {
           "type": "Group",
           "config": {

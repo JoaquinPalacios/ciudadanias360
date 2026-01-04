@@ -334,6 +334,65 @@ export type CategoryDocument<Lang extends string = string> =
     Lang
   >;
 
+/**
+ * Item in *DetalleContacto → Detalle de contacto*
+ */
+export interface DetallecontactoDocumentDataDetalleDeContactoItem {
+  /**
+   * Tipo field in *DetalleContacto → Detalle de contacto*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: detallecontacto.detalle_de_contacto[].tipo
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  tipo: prismic.SelectField<"Email" | "Whatsapp">;
+
+  /**
+   * Link field in *DetalleContacto → Detalle de contacto*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: detallecontacto.detalle_de_contacto[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Content for DetalleContacto documents
+ */
+interface DetallecontactoDocumentData {
+  /**
+   * Detalle de contacto field in *DetalleContacto*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: detallecontacto.detalle_de_contacto[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  detalle_de_contacto: prismic.GroupField<
+    Simplify<DetallecontactoDocumentDataDetalleDeContactoItem>
+  >;
+}
+
+/**
+ * DetalleContacto document from Prismic
+ *
+ * - **API ID**: `detallecontacto`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type DetallecontactoDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<DetallecontactoDocumentData>,
+    "detallecontacto",
+    Lang
+  >;
+
 type FooterDocumentDataSlicesSlice = FooterItemSlice;
 
 /**
@@ -557,6 +616,7 @@ export type AllDocumentTypes =
   | ArticleIndexDocument
   | AuthorDocument
   | CategoryDocument
+  | DetallecontactoDocument
   | FooterDocument
   | HomeDocument
   | MenuDocument
@@ -1167,6 +1227,17 @@ export interface IntroSliceDefaultPrimary {
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   texto: prismic.KeyTextField;
+
+  /**
+   * Alinear al centro field in *Intro → Default → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: intro.default.primary.alinear_al_centro
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  alinear_al_centro: prismic.BooleanField;
 
   /**
    * Enumeracion field in *Intro → Default → Primary*
@@ -1807,6 +1878,9 @@ declare module "@prismicio/client" {
       AuthorDocumentData,
       CategoryDocument,
       CategoryDocumentData,
+      DetallecontactoDocument,
+      DetallecontactoDocumentData,
+      DetallecontactoDocumentDataDetalleDeContactoItem,
       FooterDocument,
       FooterDocumentData,
       FooterDocumentDataSlicesSlice,

@@ -1,0 +1,39 @@
+{
+  "format": "custom",
+  "id": "detallecontacto",
+  "label": "DetalleContacto",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "detalle_de_contacto": {
+        "type": "Group",
+        "config": {
+          "label": "Detalle de contacto",
+          "repeat": true,
+          "fields": {
+            "tipo": {
+              "type": "Select",
+              "config": {
+                "label": "Tipo",
+                "placeholder": "",
+                "options": ["Email", "Whatsapp"]
+              }
+            },
+            "link": {
+              "type": "Link",
+              "config": {
+                "label": "Link",
+                "placeholder": "",
+                "select": null,
+                "allowTargetBlank": true,
+                "allowText": true,
+                "repeat": false
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
