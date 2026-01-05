@@ -29,9 +29,7 @@ export const Navbar = ({ menu }: NavbarProps) => {
             <SliceZone slices={menu.data.slices} components={components} />
           </nav>
 
-          <MobileMenuDrawer className="shrink-0">
-            <SliceZone slices={menu.data.slices} components={components} />
-          </MobileMenuDrawer>
+          <MobileMenuDrawer className="shrink-0" menu={menu} />
         </div>
       </div>
     </NavbarScroll>
