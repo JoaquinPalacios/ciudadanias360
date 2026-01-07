@@ -7,13 +7,18 @@ import { components } from "../../slices";
 
 type Params = { uid: string };
 
+/** Reserved UIDs that should not be served as normal pages (e.g. 404 content). */
+const RESERVED_UIDS = ["404"];
+
 export async function generateStaticParams() {
   const client = createClient();
   try {
     const pages = await client.getAllByType("page");
 
     return pages.flatMap((page) =>
-      page.uid != null ? [{ uid: page.uid }] : []
+      page.uid != null && !RESERVED_UIDS.includes(page.uid)
+        ? [{ uid: page.uid }]
+        : []
     );
   } catch {
     // If the `page` custom type hasn't been created in the Prismic repository yet,
@@ -28,6 +33,11 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { uid } = await params;
+
+  // Reserved UIDs are handled by special pages (e.g. not-found.tsx)
+  if (RESERVED_UIDS.includes(uid)) {
+    return {};
+  }
 
   const client = createClient();
 
@@ -57,6 +67,11 @@ export async function generateMetadata({
 
 export default async function Page({ params }: { params: Promise<Params> }) {
   const { uid } = await params;
+
+  // Reserved UIDs trigger 404 so their content is rendered via not-found.tsx
+  if (RESERVED_UIDS.includes(uid)) {
+    notFound();
+  }
 
   const client = createClient();
 
