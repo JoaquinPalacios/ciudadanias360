@@ -198,7 +198,11 @@ export type ArticleDocument<Lang extends string = string> =
     Lang
   >;
 
-type ArticleIndexDocumentDataSlicesSlice = HeroSlice | IntroSlice | CtaSlice;
+type ArticleIndexDocumentDataSlicesSlice =
+  | ArticulosRelacionadosSlice
+  | HeroSlice
+  | IntroSlice
+  | CtaSlice;
 
 /**
  * Content for Artículos (Index) documents
@@ -541,6 +545,7 @@ export type MenuDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<MenuDocumentData>, "menu", Lang>;
 
 type PageDocumentDataSlicesSlice =
+  | ErrorSlice
   | ArticulosRelacionadosSlice
   | ListaSlice
   | EquipoSlice
@@ -871,6 +876,68 @@ type EquipoSliceVariation = EquipoSliceDefault;
  * - **Documentation**: https://prismic.io/docs/slices
  */
 export type EquipoSlice = prismic.SharedSlice<"equipo", EquipoSliceVariation>;
+
+/**
+ * Primary content in *Error → Default → Primary*
+ */
+export interface ErrorSliceDefaultPrimary {
+  /**
+   * Titulo field in *Error → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: error.default.primary.titulo
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  titulo: prismic.KeyTextField;
+
+  /**
+   * Texto field in *Error → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: error.default.primary.texto
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  texto: prismic.KeyTextField;
+
+  /**
+   * Link field in *Error → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: error.default.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Default variation for Error Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ErrorSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ErrorSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Error*
+ */
+type ErrorSliceVariation = ErrorSliceDefault;
+
+/**
+ * Error Shared Slice
+ *
+ * - **API ID**: `error`
+ * - **Description**: Error
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ErrorSlice = prismic.SharedSlice<"error", ErrorSliceVariation>;
 
 /**
  * Item in *FooterItem → Default → Primary → Links*
@@ -1994,6 +2061,10 @@ declare module "@prismicio/client" {
       EquipoSliceDefaultPrimary,
       EquipoSliceVariation,
       EquipoSliceDefault,
+      ErrorSlice,
+      ErrorSliceDefaultPrimary,
+      ErrorSliceVariation,
+      ErrorSliceDefault,
       FooterItemSlice,
       FooterItemSliceDefaultPrimaryLinksItem,
       FooterItemSliceDefaultPrimary,

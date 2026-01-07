@@ -6,6 +6,7 @@ export const components = {
   articulos_relacionados: dynamic(() => import("./ArticulosRelacionados")),
   cta: dynamic(() => import("./Cta")),
   equipo: dynamic(() => import("./Equipo")),
+  error: dynamic(() => import("./Error")),
   footer_item: dynamic(() => import("./FooterItem")),
   formulario: dynamic(() => import("./Formulario")),
   four_cards: dynamic(() => import("./FourCards")),
