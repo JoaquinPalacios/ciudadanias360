@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Content, isFilled } from "@prismicio/client";
 import { PrismicNextLink } from "@prismicio/next";
 import { SliceComponentProps } from "@prismicio/react";
+import { buttonVariants } from "@/components/ui/button";
 
 /**
  * Props for `Error`.
@@ -44,7 +45,7 @@ const Error: FC<ErrorProps> = ({ slice }) => {
         {hasLink ? (
           <PrismicNextLink
             field={link}
-            className="mt-4 inline-flex items-center gap-2 rounded-full bg-finn px-6 py-3 text-white font-medium transition-colors hover:bg-finn/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tussok focus-visible:ring-offset-2 focus-visible:ring-offset-carrara"
+            className={buttonVariants({ variant: "default", size: "lg" })}
           >
             {linkText}
           </PrismicNextLink>
