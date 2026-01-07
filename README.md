@@ -1,20 +1,76 @@
-## UI notes
+# ⚖️ Ciudadanías 360 (Web)
 
-- **Navbar scroll behavior**: the top navbar is **sticky** and will **hide on scroll down** / **reappear on scroll up** (always visible at the top). Implemented with the [`motion`](https://www.npmjs.com/package/motion) package.
-- **Mobile menu** (< `lg` / 1024px): the navbar shows a **burger button** that opens a **right-side drawer** with backdrop; closes on **link click**, **backdrop click**, or **Escape**.
-- **Hero enumeration marquee** (< `md` / 768px): the `Hero` slice enumeration renders as a **left-scrolling marquee** with **press/hold to pause** and a **prefers-reduced-motion fallback** (static list). See `slices/Hero/index.tsx` + `slices/Hero/components/EnumeracionMarquee.tsx`.
+Marketing site built with **Next.js (App Router)** and **Prismic CMS** (Slice Machine).
 
-## Getting Started
+## Tech stack
+
+- **Next.js** (v16)
+- **React** (v19)
+- **TypeScript**
+- **Prismic** (`@prismicio/*`) + **Slice Machine** (`slice-machine-ui`)
+- **Tailwind CSS** (v4)
+- **Nodemailer** (contact form API)
+
+## Requirements
+
+- **Node.js `24.3.0`** (see `.nvmrc`)
+- **pnpm** (recommended via Corepack)
+
+## Quick start
 
 ```bash
+pnpm install
 pnpm dev
 ```
 
-Then open `http://localhost:3000`.
+App runs on `http://localhost:3000`.
 
-## Build
+## Scripts
+
+- **dev**: `pnpm dev`
+- **build**: `pnpm build`
+- **start**: `pnpm start`
+- **lint**: `pnpm lint`
+- **Slice Machine**: `pnpm slicemachine` (opens the Slice Machine UI)
+
+## Environment variables
+
+Create a `.env.local` file in the project root:
 
 ```bash
-pnpm build
-pnpm start
+# Prismic
+NEXT_PUBLIC_PRISMIC_ENVIRONMENT=ciudadanias360
+NEXT_PUBLIC_PRISMIC_ENABLE_ARTICLES=true
+
+# Contact form (Gmail via Nodemailer)
+EMAIL_ADDRESS=example@gmail.com
+EMAIL_PASSWORD=your-app-password
 ```
+
+Notes:
+
+- `NEXT_PUBLIC_PRISMIC_ENVIRONMENT` is the Prismic repository name. If omitted, we fall back to `slicemachine.config.json` (`repositoryName`).
+- `NEXT_PUBLIC_PRISMIC_ENABLE_ARTICLES` should be `"true"` only after the `article_index` and `article` custom types exist in your Prismic repo.
+- For Gmail, use an **App Password** (recommended) instead of your normal password.
+
+## Prismic integration notes
+
+- **Slices live in** `slices/`
+- **Custom Types live in** `customtypes/`
+- **Slice Simulator**: `http://localhost:3000/slice-simulator` (`app/slice-simulator/page.tsx`)
+
+### Preview
+
+Prismic preview routes:
+
+- **Start preview**: `GET /api/preview`
+- **Exit preview**: `GET /api/exit-preview`
+
+### Revalidation
+
+- **Webhook endpoint**: `POST /api/revalidate`
+- Uses Next.js cache tags (revalidates the `prismic` tag).
+
+## Deploy
+
+This project is deployed on **Vercel** (standard Next.js build pipeline).
