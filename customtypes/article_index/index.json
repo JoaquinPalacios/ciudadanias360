@@ -8,7 +8,7 @@
     "Main": {
       "slices": {
         "type": "Slices",
-        "fieldset": "Slice Zone",
+        "fieldset": "Zona de slices",
         "config": {
           "choices": {
             "articulos_relacionados": {
@@ -27,18 +27,18 @@
         }
       }
     },
-    "SEO & Metadata": {
+    "SEO y metadatos": {
       "meta_title": {
         "config": {
-          "label": "Meta Title",
-          "placeholder": "A title of the page used for social media and search engines"
+          "label": "Título meta",
+          "placeholder": "Un título de la página para redes sociales y motores de búsqueda"
         },
         "type": "Text"
       },
       "meta_description": {
         "config": {
-          "label": "Meta Description",
-          "placeholder": "A brief summary of the page"
+          "label": "Descripción meta",
+          "placeholder": "Un breve resumen de la página"
         },
         "type": "Text"
       },
@@ -48,7 +48,7 @@
             "height": 1260,
             "width": 2400
           },
-          "label": "Meta Image",
+          "label": "Imagen meta",
           "thumbnails": []
         },
         "type": "Image"

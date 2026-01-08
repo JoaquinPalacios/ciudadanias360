@@ -1,21 +1,21 @@
 {
   "id": "preguntas_frecuentes",
   "type": "SharedSlice",
-  "name": "PreguntasFrecuentes",
-  "description": "PreguntasFrecuentes",
+  "name": "Preguntas frecuentes",
+  "description": "Preguntas frecuentes",
   "variations": [
     {
       "id": "default",
-      "name": "Default",
+      "name": "Predeterminado",
       "docURL": "...",
       "version": "initial",
-      "description": "Default",
+      "description": "Predeterminado",
       "imageUrl": "",
       "primary": {
         "titulo": {
           "type": "Text",
           "config": {
-            "label": "Titulo",
+            "label": "Título",
             "placeholder": ""
           }
         },

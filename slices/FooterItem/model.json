@@ -1,28 +1,28 @@
 {
   "id": "footer_item",
   "type": "SharedSlice",
-  "name": "FooterItem",
-  "description": "FooterItem",
+  "name": "Ítem de pie de página",
+  "description": "Ítem de pie de página",
   "variations": [
     {
       "id": "default",
-      "name": "Default",
+      "name": "Predeterminado",
       "docURL": "...",
       "version": "initial",
-      "description": "Default",
+      "description": "Predeterminado",
       "imageUrl": "",
       "primary": {
         "titulo": {
           "type": "Text",
           "config": {
-            "label": "Titulo",
+            "label": "Título",
             "placeholder": ""
           }
         },
         "links": {
           "type": "Group",
           "config": {
-            "label": "Links",
+            "label": "Enlaces",
             "repeat": true,
             "fields": {
               "link": {

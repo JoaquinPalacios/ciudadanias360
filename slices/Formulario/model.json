@@ -6,16 +6,16 @@
   "variations": [
     {
       "id": "default",
-      "name": "Default",
+      "name": "Predeterminado",
       "docURL": "...",
       "version": "initial",
-      "description": "Default",
+      "description": "Predeterminado",
       "imageUrl": "",
       "primary": {
         "titulo": {
           "type": "Text",
           "config": {
-            "label": "Titulo",
+            "label": "Título",
             "placeholder": ""
           }
         },

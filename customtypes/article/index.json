@@ -1,7 +1,7 @@
 {
   "format": "page",
   "id": "article",
-  "label": "Article",
+  "label": "Artículo",
   "repeatable": true,
   "status": true,
   "json": {
@@ -16,21 +16,21 @@
       "title": {
         "type": "Text",
         "config": {
-          "label": "Title",
-          "placeholder": "Article title"
+          "label": "Título",
+          "placeholder": "Título del artículo"
         }
       },
       "excerpt": {
         "type": "Text",
         "config": {
-          "label": "Excerpt",
-          "placeholder": "Short summary used in lists/cards"
+          "label": "Extracto",
+          "placeholder": "Resumen corto para listas/tarjetas"
         }
       },
       "featured_image": {
         "type": "Image",
         "config": {
-          "label": "Featured image",
+          "label": "Imagen destacada",
           "constraint": {},
           "thumbnails": []
         }
@@ -38,14 +38,14 @@
       "publish_date": {
         "type": "Date",
         "config": {
-          "label": "Publish date",
+          "label": "Fecha de publicación",
           "placeholder": ""
         }
       },
       "author": {
         "type": "Link",
         "config": {
-          "label": "Author",
+          "label": "Autor",
           "select": "document",
           "customtypes": ["author"],
           "allowTargetBlank": false
@@ -63,25 +63,25 @@
       "body": {
         "type": "StructuredText",
         "config": {
-          "label": "Body",
+          "label": "Contenido",
           "placeholder": "",
           "allowTargetBlank": true,
           "multi": "paragraph,preformatted,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,list-item,o-list-item"
         }
       }
     },
-    "SEO & Metadata": {
+    "SEO y metadatos": {
       "meta_title": {
         "config": {
-          "label": "Meta Title",
-          "placeholder": "A title of the page used for social media and search engines"
+          "label": "Título meta",
+          "placeholder": "Un título de la página para redes sociales y motores de búsqueda"
         },
         "type": "Text"
       },
       "meta_description": {
         "config": {
-          "label": "Meta Description",
-          "placeholder": "A brief summary of the page"
+          "label": "Descripción meta",
+          "placeholder": "Un breve resumen de la página"
         },
         "type": "Text"
       },
@@ -91,7 +91,7 @@
             "height": 1260,
             "width": 2400
           },
-          "label": "Meta Image",
+          "label": "Imagen meta",
           "thumbnails": []
         },
         "type": "Image"

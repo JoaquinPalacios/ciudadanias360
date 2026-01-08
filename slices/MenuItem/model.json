@@ -1,21 +1,21 @@
 {
   "id": "menu_item",
   "type": "SharedSlice",
-  "name": "MenuItem",
-  "description": "MenuItem",
+  "name": "Ítem de menú",
+  "description": "Ítem de menú",
   "variations": [
     {
       "id": "default",
-      "name": "Default",
+      "name": "Predeterminado",
       "docURL": "...",
       "version": "initial",
-      "description": "Default",
+      "description": "Predeterminado",
       "imageUrl": "",
       "primary": {
         "links": {
           "type": "Group",
           "config": {
-            "label": "Links",
+            "label": "Enlaces",
             "repeat": true,
             "fields": {
               "link": {

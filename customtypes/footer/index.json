@@ -1,7 +1,7 @@
 {
   "format": "custom",
   "id": "footer",
-  "label": "Footer",
+  "label": "Pie de página",
   "repeatable": false,
   "status": true,
   "json": {
@@ -9,7 +9,7 @@
       "name": {
         "type": "Text",
         "config": {
-          "label": "Name",
+          "label": "Nombre",
           "placeholder": ""
         }
       },
@@ -22,7 +22,7 @@
       },
       "slices": {
         "type": "Slices",
-        "fieldset": "Slice Zone",
+        "fieldset": "Zona de slices",
         "config": {
           "choices": {
             "footer_item": {

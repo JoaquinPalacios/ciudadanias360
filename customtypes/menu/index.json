@@ -1,14 +1,14 @@
 {
   "format": "custom",
   "id": "menu",
-  "label": "Menu",
+  "label": "Menú",
   "repeatable": false,
   "status": true,
   "json": {
     "Main": {
       "slices": {
         "type": "Slices",
-        "fieldset": "Slice Zone",
+        "fieldset": "Zona de slices",
         "config": {
           "choices": {
             "menu_item": {

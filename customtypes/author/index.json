@@ -1,7 +1,7 @@
 {
   "format": "custom",
   "id": "author",
-  "label": "Author",
+  "label": "Autor",
   "repeatable": true,
   "status": true,
   "json": {
@@ -16,14 +16,14 @@
       "name": {
         "type": "Text",
         "config": {
-          "label": "Name",
-          "placeholder": "Author name"
+          "label": "Nombre",
+          "placeholder": "Nombre del autor"
         }
       },
       "avatar": {
         "type": "Image",
         "config": {
-          "label": "Avatar",
+          "label": "Foto",
           "constraint": {},
           "thumbnails": []
         }

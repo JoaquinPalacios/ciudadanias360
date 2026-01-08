@@ -1,21 +1,21 @@
 {
   "id": "intro",
   "type": "SharedSlice",
-  "name": "Intro",
-  "description": "Intro",
+  "name": "Introducción",
+  "description": "Introducción",
   "variations": [
     {
       "id": "default",
-      "name": "Default",
+      "name": "Predeterminado",
       "docURL": "...",
       "version": "initial",
-      "description": "Default",
+      "description": "Predeterminado",
       "imageUrl": "",
       "primary": {
         "titulo": {
           "type": "Text",
           "config": {
-            "label": "Titulo",
+            "label": "Título",
             "placeholder": ""
           }
         },
@@ -38,13 +38,13 @@
         "enumeracion": {
           "type": "Group",
           "config": {
-            "label": "Enumeracion",
+            "label": "Enumeración",
             "repeat": true,
             "fields": {
               "titulo": {
                 "type": "Text",
                 "config": {
-                  "label": "Titulo",
+                  "label": "Título",
                   "placeholder": ""
                 }
               },

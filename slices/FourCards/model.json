@@ -1,34 +1,34 @@
 {
   "id": "four_cards",
   "type": "SharedSlice",
-  "name": "FourCards",
-  "description": "FourCards",
+  "name": "Cuatro tarjetas",
+  "description": "Cuatro tarjetas",
   "variations": [
     {
       "id": "default",
-      "name": "Default",
+      "name": "Predeterminado",
       "docURL": "...",
       "version": "initial",
-      "description": "Default",
+      "description": "Predeterminado",
       "imageUrl": "",
       "primary": {
         "titulo": {
           "type": "Text",
           "config": {
-            "label": "Titulo",
+            "label": "Título",
             "placeholder": ""
           }
         },
         "cards": {
           "type": "Group",
           "config": {
-            "label": "Cards",
+            "label": "Tarjetas",
             "repeat": true,
             "fields": {
               "titulo": {
                 "type": "Text",
                 "config": {
-                  "label": "Titulo",
+                  "label": "Título",
                   "placeholder": ""
                 }
               },

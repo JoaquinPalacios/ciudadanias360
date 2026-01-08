@@ -1,21 +1,21 @@
 {
   "id": "cta",
   "type": "SharedSlice",
-  "name": "Cta",
-  "description": "Cta",
+  "name": "Llamado a la acción",
+  "description": "Llamado a la acción",
   "variations": [
     {
       "id": "default",
-      "name": "Default",
+      "name": "Predeterminado",
       "docURL": "...",
       "version": "initial",
-      "description": "Default",
+      "description": "Predeterminado",
       "imageUrl": "",
       "primary": {
         "titulo": {
           "type": "Text",
           "config": {
-            "label": "Titulo",
+            "label": "Título",
             "placeholder": ""
           }
         },
@@ -45,7 +45,7 @@
         "whatsapp": {
           "type": "Link",
           "config": {
-            "label": "Whatsapp",
+            "label": "WhatsApp",
             "placeholder": "",
             "select": null,
             "allowTargetBlank": true,
