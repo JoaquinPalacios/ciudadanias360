@@ -73,7 +73,7 @@ export const ServiceCard = ({ card, anchorId }: Props) => {
       {card.link ? (
         <PrismicNextLink
           field={card.link}
-          className="group mt-auto inline-flex items-center gap-1 text-pesto"
+          className="group mt-auto inline-flex items-center gap-1 text-crete"
         >
           <span className="link-underline--group">{linkText || "Ver más"}</span>
           <ArrowRight

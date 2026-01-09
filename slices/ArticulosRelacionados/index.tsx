@@ -60,12 +60,16 @@ const ArticulosRelacionados = async ({
         {link ? (
           <PrismicNextLink
             field={link}
-            className="group inline-flex items-center gap-2 text-pesto"
+            className="group inline-flex items-center gap-2 text-crete"
           >
             <span className="link-underline--group">
               {linkText || "Ver todos"}
             </span>
-            <ArrowRight className="size-4 mt-0.5" aria-hidden="true" />
+            <ArrowRight
+              className="size-4 mt-0.5 group-hover:translate-x-0.5 transition-transform"
+              aria-hidden="true"
+              strokeWidth={2.5}
+            />
           </PrismicNextLink>
         ) : null}
       </header>
