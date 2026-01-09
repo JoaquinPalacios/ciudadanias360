@@ -83,6 +83,7 @@ const Hero: FC<HeroProps> = ({ slice }) => {
             className="object-cover"
             fallbackAlt=""
             loading="eager"
+            fetchPriority="high"
           />
           {/* Finn overlay to blend image into the section background */}
           <div className="absolute inset-0 bg-linear-to-b from-finn/40 via-finn/80 to-finn z-10" />

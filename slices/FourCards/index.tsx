@@ -77,7 +77,7 @@ const FourCards: FC<FourCardsProps> = ({ slice }) => {
                   ) : null}
 
                   {hasLink ? (
-                    <span className="mt-auto inline-flex items-center gap-2 text-tussok">
+                    <span className="mt-auto inline-flex items-center gap-2 text-pesto">
                       <span className="link-underline--group">
                         {linkText || "Más información"}
                       </span>

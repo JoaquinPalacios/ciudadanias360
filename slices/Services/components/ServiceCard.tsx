@@ -73,10 +73,14 @@ export const ServiceCard = ({ card, anchorId }: Props) => {
       {card.link ? (
         <PrismicNextLink
           field={card.link}
-          className="group mt-auto inline-flex items-center gap-1 text-tussok"
+          className="group mt-auto inline-flex items-center gap-1 text-pesto"
         >
           <span className="link-underline--group">{linkText || "Ver más"}</span>
-          <ArrowRight className="size-4 mt-0.5" aria-hidden="true" />
+          <ArrowRight
+            className="size-4 mt-0.5 group-hover:translate-x-0.5 transition-transform"
+            aria-hidden="true"
+            strokeWidth={2.5}
+          />
         </PrismicNextLink>
       ) : null}
     </div>

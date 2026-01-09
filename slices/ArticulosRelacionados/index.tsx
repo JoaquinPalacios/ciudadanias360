@@ -60,7 +60,7 @@ const ArticulosRelacionados = async ({
         {link ? (
           <PrismicNextLink
             field={link}
-            className="group inline-flex items-center gap-2 text-tussok"
+            className="group inline-flex items-center gap-2 text-pesto"
           >
             <span className="link-underline--group">
               {linkText || "Ver todos"}
