@@ -158,6 +158,29 @@
 }
 
 @layer utilities {
+  /* Hero reveal animation (one-time fade/slide on first view) */
+  .hero-reveal-item {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 2500ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 1800ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--hero-reveal-delay, 100ms);
+  }
+
+  [data-reveal="true"] .hero-reveal-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-reveal-item {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
   .link-underline {
     position: relative;
     display: inline-block;

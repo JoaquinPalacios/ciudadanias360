@@ -45,7 +45,7 @@ function EnumeracionSequence({
   withTrailingSeparator?: boolean;
 }) {
   return (
-    <div className="flex shrink-0 items-center gap-x-4">
+    <div className="flex shrink-0 items-center gap-x-4 pr-4">
       {items.map((texto, index) => (
         <div key={`${texto}-${index}`} className="contents">
           <p className="text-white whitespace-nowrap">{texto}</p>
@@ -107,6 +107,7 @@ export function EnumeracionMarquee({
       // `x` accepts percentage strings at runtime.
       { x: ["0%", "-50%"] } as unknown as never,
       {
+        delay: 1, // Wait for hero reveal animation to settle
         duration: durationSeconds,
         easing: "linear",
         repeat: Infinity,

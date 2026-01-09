@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 import { EnumeracionMarquee } from "./components/EnumeracionMarquee";
+import { RevealOnce } from "./components/RevealOnce";
 
 /**
  * Props for `Hero`.
@@ -116,9 +117,12 @@ const Hero: FC<HeroProps> = ({ slice }) => {
           )}
         />
       </div>
-      <div className="mx-auto flex w-full max-w-8xl flex-col lg:gap-6 relative z-20 mt-40 md:mt-48 lg:mt-60 mb-6 lg:mb-10">
+      <RevealOnce className="mx-auto flex w-full max-w-8xl flex-col lg:gap-6 relative z-20 mt-40 md:mt-48 lg:mt-60 mb-6 lg:mb-10">
         {titulo ? (
-          <h1 className="text-white text-center max-w-5xl mx-auto leading-none mb-8 lg:mb-10">
+          <h1
+            className="hero-reveal-item text-white text-center max-w-5xl mx-auto leading-none mb-8 lg:mb-10"
+            style={{ "--hero-reveal-delay": "0ms" } as React.CSSProperties}
+          >
             {renderTitleWithLastWordAccent(titulo)}
           </h1>
         ) : null}
@@ -126,15 +130,19 @@ const Hero: FC<HeroProps> = ({ slice }) => {
         {subtitulo ? (
           <p
             className={cn(
-              "max-w-4xl mx-auto text-white/90 text-center text-xl lg:text-2xl",
+              "hero-reveal-item max-w-4xl mx-auto text-white/90 text-center text-xl lg:text-2xl",
               showCtas ? "mb-10" : "mb-40"
             )}
+            style={{ "--hero-reveal-delay": "100ms" } as React.CSSProperties}
           >
             {subtitulo}
           </p>
         ) : null}
         {showCtas ? (
-          <div className="flex gap-6 md:gap-12 justify-center mb-12 flex-col sm:flex-row">
+          <div
+            className="hero-reveal-item flex gap-6 md:gap-12 justify-center mb-12 flex-col sm:flex-row"
+            style={{ "--hero-reveal-delay": "200ms" } as React.CSSProperties}
+          >
             {mostrar_boton_calendario ? (
               <Button size="lg">Agendá una consulta</Button>
             ) : null}
@@ -148,7 +156,10 @@ const Hero: FC<HeroProps> = ({ slice }) => {
         ) : null}
 
         {showEnumeracion ? (
-          <>
+          <div
+            className="hero-reveal-item"
+            style={{ "--hero-reveal-delay": "300ms" } as React.CSSProperties}
+          >
             {/* Mobile: marquee */}
             <div className="md:hidden">
               <EnumeracionMarquee items={enumeracionItems} />
@@ -167,9 +178,9 @@ const Hero: FC<HeroProps> = ({ slice }) => {
                 </Fragment>
               ))}
             </div>
-          </>
+          </div>
         ) : null}
-      </div>
+      </RevealOnce>
     </section>
   );
 };
