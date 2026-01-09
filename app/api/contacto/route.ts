@@ -3,6 +3,9 @@ import nodemailer from "nodemailer";
 
 export const runtime = "nodejs";
 
+// Minimum time (ms) between form load and submit to consider it human
+const MIN_SUBMIT_TIME_MS = 2000;
+
 export type Fields = {
   name: string;
   message: string;
@@ -11,6 +14,10 @@ export type Fields = {
   pais_residencia?: string;
   consulado_ciudad?: string;
   whatsapp_telefono?: string;
+  // Anti-spam fields
+  turnstileToken?: string;
+  hp?: string;
+  startedAt?: number;
 };
 
 export type Response = {
@@ -39,10 +46,101 @@ function safeLine(label: string, value?: string) {
   return `${label}: ${v}\n`;
 }
 
+/**
+ * Verify Turnstile token with Cloudflare
+ */
+async function verifyTurnstile(
+  token: string,
+  ip?: string | null
+): Promise<{ success: boolean; errorCodes?: string[] }> {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (!secret) {
+    // If no secret configured, skip verification (dev mode)
+    console.warn("TURNSTILE_SECRET_KEY not set, skipping verification");
+    return { success: true };
+  }
+
+  const formData = new URLSearchParams();
+  formData.append("secret", secret);
+  formData.append("response", token);
+  if (ip) {
+    formData.append("remoteip", ip);
+  }
+
+  const res = await fetch(
+    "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+    {
+      method: "POST",
+      body: formData,
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    }
+  );
+
+  const data = (await res.json()) as {
+    success: boolean;
+    "error-codes"?: string[];
+  };
+
+  return {
+    success: data.success,
+    errorCodes: data["error-codes"],
+  };
+}
+
 export const POST = async (req: NextRequest) => {
   try {
     const request = (await req.json()) as Fields;
-    const { name, email, message } = request;
+    const { name, email, message, turnstileToken, hp, startedAt } = request;
+
+    // --- Anti-spam checks ---
+
+    // 1. Honeypot check: if filled, it's a bot
+    if (hp) {
+      // Silently reject (don't give bots hints)
+      return NextResponse.json<Response>(
+        { status: "fail", error: "No se pudo enviar el mensaje." },
+        { status: 400 }
+      );
+    }
+
+    // 2. Time check: reject if submitted too fast (likely bot)
+    if (startedAt) {
+      const elapsed = Date.now() - startedAt;
+      if (elapsed < MIN_SUBMIT_TIME_MS) {
+        return NextResponse.json<Response>(
+          { status: "fail", error: "Por favor espere un momento antes de enviar." },
+          { status: 400 }
+        );
+      }
+    }
+
+    // 3. Turnstile verification (if token provided)
+    const hasTurnstileSecret = Boolean(process.env.TURNSTILE_SECRET_KEY);
+    if (hasTurnstileSecret) {
+      if (!turnstileToken) {
+        return NextResponse.json<Response>(
+          { status: "fail", error: "Por favor complete la verificación de seguridad." },
+          { status: 400 }
+        );
+      }
+
+      // Get client IP for Turnstile (optional but recommended)
+      const ip =
+        req.headers.get("CF-Connecting-IP") ||
+        req.headers.get("X-Forwarded-For")?.split(",")[0]?.trim() ||
+        null;
+
+      const verification = await verifyTurnstile(turnstileToken, ip);
+      if (!verification.success) {
+        console.error("Turnstile verification failed:", verification.errorCodes);
+        return NextResponse.json<Response>(
+          { status: "fail", error: "No se pudo verificar la seguridad. Por favor intente de nuevo." },
+          { status: 400 }
+        );
+      }
+    }
+
+    // --- End anti-spam checks ---
 
     if (!name || !name.trim()) {
       throw new Error("Por favor ingrese un nombre valido.");

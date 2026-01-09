@@ -1,7 +1,25 @@
 "use client";
 
-import { type FormEvent, useMemo, useState } from "react";
+import { type FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import Script from "next/script";
 import { Button } from "@/components/ui/button";
+
+// Turnstile global types
+declare global {
+  interface Window {
+    onTurnstileSuccess?: (token: string) => void;
+    onTurnstileExpired?: () => void;
+    onTurnstileError?: () => void;
+    turnstile?: {
+      reset: (container?: string | HTMLElement) => void;
+      render: (
+        container: string | HTMLElement,
+        options: Record<string, unknown>
+      ) => string;
+      remove: (widgetId: string) => void;
+    };
+  }
+}
 
 type TramiteType = "ciudadania" | "visa" | "tramites_consulares" | "otro";
 
@@ -13,6 +31,10 @@ type ContactPayload = {
   pais_residencia?: string;
   consulado_ciudad?: string;
   whatsapp_telefono?: string;
+  // Anti-spam fields
+  turnstileToken?: string;
+  hp?: string;
+  startedAt?: number;
 };
 
 type ApiResponse =
@@ -30,6 +52,8 @@ function isValidEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 }
 
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
 export function FormularioForm() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -43,12 +67,43 @@ export function FormularioForm() {
   const [consuladoCiudad, setConsuladoCiudad] = useState("");
   const [whatsappTelefono, setWhatsappTelefono] = useState("");
 
+  // Anti-spam: Turnstile token
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  // Anti-spam: honeypot (should remain empty)
+  const [hp, setHp] = useState("");
+  // Anti-spam: track when form was loaded
+  const startedAtRef = useRef<number>(Date.now());
+
+  // Whether captcha is required (only if site key is configured)
+  const requiresCaptcha = Boolean(TURNSTILE_SITE_KEY);
+
+  // Register global Turnstile callbacks
+  useEffect(() => {
+    window.onTurnstileSuccess = (token: string) => {
+      setTurnstileToken(token);
+    };
+    window.onTurnstileExpired = () => {
+      setTurnstileToken(null);
+    };
+    window.onTurnstileError = () => {
+      setTurnstileToken(null);
+    };
+
+    return () => {
+      delete window.onTurnstileSuccess;
+      delete window.onTurnstileExpired;
+      delete window.onTurnstileError;
+    };
+  }, []);
+
   const canSubmit = useMemo(() => {
     if (!name.trim()) return false;
     if (!email.trim() || !isValidEmail(email)) return false;
     if (!message.trim()) return false;
+    // Require captcha token if captcha is enabled
+    if (requiresCaptcha && !turnstileToken) return false;
     return true;
-  }, [email, message, name]);
+  }, [email, message, name, requiresCaptcha, turnstileToken]);
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -68,6 +123,10 @@ export function FormularioForm() {
       pais_residencia: paisResidencia.trim() || undefined,
       consulado_ciudad: consuladoCiudad.trim() || undefined,
       whatsapp_telefono: whatsappTelefono.trim() || undefined,
+      // Anti-spam fields
+      turnstileToken: turnstileToken || undefined,
+      hp: hp || undefined,
+      startedAt: startedAtRef.current,
     };
 
     setLoading(true);
@@ -95,6 +154,13 @@ export function FormularioForm() {
       setWhatsappTelefono("");
       setTipoTramite("ciudadania");
 
+      // Reset anti-spam state
+      setTurnstileToken(null);
+      setHp("");
+      startedAtRef.current = Date.now();
+      // Reset Turnstile widget so user can submit again
+      window.turnstile?.reset();
+
       setSuccess(true);
       setTimeout(() => setSuccess(false), 7000);
     } catch (err) {
@@ -108,6 +174,25 @@ export function FormularioForm() {
 
   return (
     <form onSubmit={onSubmit} className="mt-8">
+      {/* Honeypot field - hidden from real users, bots will fill it */}
+      <input
+        type="text"
+        name="company"
+        value={hp}
+        onChange={(e) => setHp(e.target.value)}
+        autoComplete="off"
+        tabIndex={-1}
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          left: "-9999px",
+          top: "auto",
+          width: "1px",
+          height: "1px",
+          overflow: "hidden",
+        }}
+      />
+
       <div className="grid gap-4 sm:gap-5 md:grid-cols-2">
         <div className="flex flex-col gap-1.5">
           <label className="form-label" htmlFor="name">
@@ -229,6 +314,27 @@ export function FormularioForm() {
         <p className="mt-4 text-sm text-finn" role="status">
           ¡Gracias! Recibimos tu mensaje. Te vamos a responder a la brevedad.
         </p>
+      ) : null}
+
+      {/* Cloudflare Turnstile widget */}
+      {TURNSTILE_SITE_KEY ? (
+        <>
+          <Script
+            src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+            async
+            defer
+          />
+          <div className="mt-6">
+            <div
+              className="cf-turnstile"
+              data-sitekey={TURNSTILE_SITE_KEY}
+              data-callback="onTurnstileSuccess"
+              data-expired-callback="onTurnstileExpired"
+              data-error-callback="onTurnstileError"
+              data-theme="light"
+            />
+          </div>
+        </>
       ) : null}
 
       <div className="mt-6">
