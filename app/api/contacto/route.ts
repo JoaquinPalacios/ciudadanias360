@@ -47,6 +47,37 @@ function safeLine(label: string, value?: string) {
 }
 
 /**
+ * Escape HTML special characters to prevent XSS in email HTML body
+ */
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+/**
+ * Validate email format (server-side)
+ */
+function isValidEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+}
+
+const TIPO_TRAMITE_LABELS: Record<string, string> = {
+  ciudadania: "Ciudadanía",
+  visa: "Visa",
+  tramites_consulares: "Trámites consulares",
+  otro: "Otro",
+};
+
+function formatTipoTramite(value?: string): string | undefined {
+  if (!value) return undefined;
+  return TIPO_TRAMITE_LABELS[value] ?? value;
+}
+
+/**
  * Verify Turnstile token with Cloudflare
  */
 async function verifyTurnstile(
@@ -108,7 +139,10 @@ export const POST = async (req: NextRequest) => {
       const elapsed = Date.now() - startedAt;
       if (elapsed < MIN_SUBMIT_TIME_MS) {
         return NextResponse.json<Response>(
-          { status: "fail", error: "Por favor espere un momento antes de enviar." },
+          {
+            status: "fail",
+            error: "Por favor espere un momento antes de enviar.",
+          },
           { status: 400 }
         );
       }
@@ -119,7 +153,10 @@ export const POST = async (req: NextRequest) => {
     if (hasTurnstileSecret) {
       if (!turnstileToken) {
         return NextResponse.json<Response>(
-          { status: "fail", error: "Por favor complete la verificación de seguridad." },
+          {
+            status: "fail",
+            error: "Por favor complete la verificación de seguridad.",
+          },
           { status: 400 }
         );
       }
@@ -132,9 +169,16 @@ export const POST = async (req: NextRequest) => {
 
       const verification = await verifyTurnstile(turnstileToken, ip);
       if (!verification.success) {
-        console.error("Turnstile verification failed:", verification.errorCodes);
+        console.error(
+          "Turnstile verification failed:",
+          verification.errorCodes
+        );
         return NextResponse.json<Response>(
-          { status: "fail", error: "No se pudo verificar la seguridad. Por favor intente de nuevo." },
+          {
+            status: "fail",
+            error:
+              "No se pudo verificar la seguridad. Por favor intente de nuevo.",
+          },
           { status: 400 }
         );
       }
@@ -150,6 +194,10 @@ export const POST = async (req: NextRequest) => {
       throw new Error("Por favor ingrese una direccion de correo valida.");
     }
 
+    if (!isValidEmail(email)) {
+      throw new Error("El formato del correo electrónico no es válido.");
+    }
+
     if (!message || !message.trim()) {
       throw new Error("Por favor ingrese un mensaje.");
     }
@@ -158,43 +206,44 @@ export const POST = async (req: NextRequest) => {
     const from = to; // best practice for Gmail deliverability
     const replyTo = email.trim();
 
+    const tipoTramiteLabel = formatTipoTramite(request.tipo_tramite);
+
     const text =
       `${message.trim()}\n\n` +
       `---\n` +
       safeLine("Nombre", name) +
       safeLine("Email", email) +
       safeLine("WhatsApp / Teléfono", request.whatsapp_telefono) +
-      safeLine("Tipo de trámite", request.tipo_tramite) +
+      safeLine("Tipo de trámite", tipoTramiteLabel) +
       safeLine("País de residencia", request.pais_residencia) +
       safeLine("Consulado / ciudad", request.consulado_ciudad);
 
-    const htmlMessage = message.trim().replace(/(?:\r\n|\r|\n)/g, "<br>");
+    // Escape all user input for safe HTML rendering
+    const safeMessage = escapeHtml(message.trim()).replace(
+      /(?:\r\n|\r|\n)/g,
+      "<br>"
+    );
+    const safeName = escapeHtml(name.trim());
+    const safeEmail = escapeHtml(email.trim());
+    const safeWhatsapp = request.whatsapp_telefono?.trim()
+      ? escapeHtml(request.whatsapp_telefono.trim())
+      : "";
+    const safePais = request.pais_residencia?.trim()
+      ? escapeHtml(request.pais_residencia.trim())
+      : "";
+    const safeConsulado = request.consulado_ciudad?.trim()
+      ? escapeHtml(request.consulado_ciudad.trim())
+      : "";
 
     const html = `
-      <p>${htmlMessage}</p>
+      <p>${safeMessage}</p>
       <hr />
-      <p><strong>Nombre:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      ${
-        request.whatsapp_telefono?.trim()
-          ? `<p><strong>WhatsApp / Teléfono:</strong> ${request.whatsapp_telefono}</p>`
-          : ""
-      }
-      ${
-        request.tipo_tramite?.trim()
-          ? `<p><strong>Tipo de trámite:</strong> ${request.tipo_tramite}</p>`
-          : ""
-      }
-      ${
-        request.pais_residencia?.trim()
-          ? `<p><strong>País de residencia:</strong> ${request.pais_residencia}</p>`
-          : ""
-      }
-      ${
-        request.consulado_ciudad?.trim()
-          ? `<p><strong>Consulado / ciudad:</strong> ${request.consulado_ciudad}</p>`
-          : ""
-      }
+      <p><strong>Nombre:</strong> ${safeName}</p>
+      <p><strong>Email:</strong> ${safeEmail}</p>
+      ${safeWhatsapp ? `<p><strong>WhatsApp / Teléfono:</strong> ${safeWhatsapp}</p>` : ""}
+      ${tipoTramiteLabel ? `<p><strong>Tipo de trámite:</strong> ${tipoTramiteLabel}</p>` : ""}
+      ${safePais ? `<p><strong>País de residencia:</strong> ${safePais}</p>` : ""}
+      ${safeConsulado ? `<p><strong>Consulado / ciudad:</strong> ${safeConsulado}</p>` : ""}
     `;
 
     await transporter.sendMail({
