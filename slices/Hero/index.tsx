@@ -69,7 +69,7 @@ const Hero: FC<HeroProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="px-4 pb-12 pt-32 lg:px-6 lg:pb-16 lg:pt-36 relative overflow-hidden bg-tamarind -mt-20"
+      className="px-4 pb-12 pt-32 lg:px-6 lg:pb-16 lg:pt-40 relative overflow-hidden bg-tamarind -mt-20"
     >
       {/* Background image (optional) */}
       {background_image?.url ? (
